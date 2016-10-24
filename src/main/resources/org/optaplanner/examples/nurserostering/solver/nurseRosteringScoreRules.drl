@@ -1,0 +1,105 @@
+/*
+ * Copyright 2010 Red Hat, Inc. and/or its affiliates.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.optaplanner.examples.nurserostering.solver;
+    dialect "java"
+
+import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScoreHolder;
+
+import org.optaplanner.examples.nurserostering.domain.Employee;
+import org.optaplanner.examples.nurserostering.domain.ShiftAssignment;
+import org.optaplanner.examples.nurserostering.domain.contract.ContractLineType;
+import org.optaplanner.examples.nurserostering.domain.contract.MinMaxContractLine;
+import org.optaplanner.examples.nurserostering.solver.drools.EmployeeConsecutiveWeekendAssignmentEnd;
+import org.optaplanner.examples.nurserostering.solver.drools.EmployeeConsecutiveWeekendAssignmentStart;
+import org.optaplanner.examples.nurserostering.solver.drools.EmployeeWeekendSequence;
+
+global HardSoftScoreHolder scoreHolder;
+
+rule "insertEmployeeConsecutiveWeekendAssignmentStart"
+        salience 2 // Do these rules first (optional, for performance)
+    when
+        ShiftAssignment(
+            weekend == true,
+            $employee : employee, employee != null,
+            $weekendSundayIndex : weekendSundayIndex
+        )
+        // The first working weekend has no working weekend before it
+        not ShiftAssignment(
+            weekend == true,
+            employee == $employee,
+            weekendSundayIndex == ($weekendSundayIndex - 7)
+        )
+    then
+        insertLogical(new EmployeeConsecutiveWeekendAssignmentStart($employee, $weekendSundayIndex));
+end
+rule "insertEmployeeConsecutiveWeekendAssignmentEnd"
+        salience 2 // Do these rules first (optional, for performance)
+    when
+        ShiftAssignment(
+            weekend == true,
+            $employee : employee, employee != null,
+            $weekendSundayIndex : weekendSundayIndex
+        )
+        // The last working weekend has no working weekend after it
+        not ShiftAssignment(
+            weekend == true,
+            employee == $employee,
+            weekendSundayIndex == ($weekendSundayIndex + 7)
+        )
+    then
+        insertLogical(new EmployeeConsecutiveWeekendAssignmentEnd($employee, $weekendSundayIndex));
+end
+
+rule "insertEmployeeWeekendSequence"
+    when
+        EmployeeConsecutiveWeekendAssignmentStart(
+            $employee : employee,
+            $firstSundayIndex : sundayIndex
+        )
+
+        EmployeeConsecutiveWeekendAssignmentEnd(
+            employee == $employee,
+            sundayIndex >= $firstSundayIndex,
+            $lastSundayIndex : sundayIndex
+        )
+
+        // There are no free weekends between the first and last weekend
+        not EmployeeConsecutiveWeekendAssignmentEnd(
+            employee == $employee,
+            sundayIndex >= $firstSundayIndex && < $lastSundayIndex
+        )
+    then
+        insertLogical(new EmployeeWeekendSequence($employee, $firstSundayIndex, $lastSundayIndex));
+end
+
+// Maximum number of consecutive working weekends
+rule "maximumConsecutiveWorkingWeekends"
+    when
+        $contractLine : MinMaxContractLine(
+            $contract : contract, $maximumValue : maximumValue
+        )
+        $employee : Employee(contract == $contract)
+
+        EmployeeWeekendSequence(
+            employee == $employee,
+            weekendLength > $maximumValue,
+            $weekendLength : weekendLength
+        )
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext,
+                ($maximumValue - $weekendLength) * $contractLine.getMaximumWeight());
+end
