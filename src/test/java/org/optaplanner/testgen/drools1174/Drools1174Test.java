@@ -22,10 +22,28 @@ public class Drools1174Test {
 
     @Before
     public void setUp() {
+        String rule = "package pkg;\n"
+                + "    dialect \"java\"\n"
+                + "\n"
+                + "import org.optaplanner.testgen.drools1174.Drools1174Test.JobType;\n"
+                + "import org.optaplanner.testgen.drools1174.Drools1174Test.SeatDesignation;\n"
+                + "import org.optaplanner.testgen.drools1174.Drools1174Test.Table;\n"
+                + "\n"
+                + "rule \"twoSameJobTypePerTable\"\n"
+                + "    when\n"
+                + "        $jobType : JobType()\n"
+                + "        $table : Table()\n"
+                + "        not (\n"
+                + "            SeatDesignation(guestJobType == $jobType, seatTable == $table, $leftId : id, $firstJob : guestJob)\n"
+                + "            and SeatDesignation(guestJobType == $jobType, seatTable == $table, id > $leftId,\n"
+                + "                    differentKindIfNeeded($firstJob))\n"
+                + "        )\n"
+                + "    then\n"
+                + "end\n"
+                + "";
         KieServices kieServices = KieServices.Factory.get();
         KieFileSystem kfs = kieServices.newKieFileSystem();
-        kfs.write(kieServices.getResources()
-                .newClassPathResource("org/optaplanner/testgen/drools1179/dinnerPartyScoreRules.drl"));
+        kfs.write("src/main/resources/dinnerPartyScoreRules.drl", rule);
         kieServices.newKieBuilder(kfs).buildAll();
         kieContainer = kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
         kieSession = kieContainer.newKieSession();
