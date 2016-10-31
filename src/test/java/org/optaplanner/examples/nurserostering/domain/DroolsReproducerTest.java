@@ -4,11 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieFileSystem;
-import org.kie.api.builder.model.KieModuleModel;
-import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.api.score.holder.ScoreHolder;
 import org.optaplanner.core.impl.score.buildin.hardsoft.HardSoftScoreDefinition;
 import org.optaplanner.examples.nurserostering.domain.contract.Contract;
@@ -21,6 +18,7 @@ public class DroolsReproducerTest {
 
     private KieContainer kieContainer;
     private KieSession kieSession;
+    private ScoreHolder scoreHolder;
     private final ShiftDate shiftDate_2Sun = new ShiftDate();
     private final ShiftDate shiftDate_7Fri = new ShiftDate();
     private final Shift shift_2Sun = new Shift();
@@ -35,12 +33,9 @@ public class DroolsReproducerTest {
     @Before
     public void setUp() {
         KieServices kieServices = KieServices.Factory.get();
-        KieModuleModel kieModuleModel = kieServices.newKieModuleModel();
         KieFileSystem kfs = kieServices.newKieFileSystem();
-        kfs.writeKModuleXML(kieModuleModel.toXML());
         kfs.write(kieServices.getResources()
-                .newClassPathResource("org/optaplanner/examples/nurserostering/solver/nurseRosteringScoreRules.drl")
-                .setResourceType(ResourceType.DRL));
+                .newClassPathResource("org/optaplanner/examples/nurserostering/solver/nurseRosteringScoreRules.drl"));
         kieServices.newKieBuilder(kfs).buildAll();
         kieContainer = kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
 
@@ -71,7 +66,8 @@ public class DroolsReproducerTest {
     @Test
     public void test() {
         kieSession = kieContainer.newKieSession();
-        kieSession.setGlobal("scoreHolder", new HardSoftScoreDefinition().buildScoreHolder(true));
+        scoreHolder = new HardSoftScoreDefinition().buildScoreHolder(true);
+        kieSession.setGlobal("scoreHolder", scoreHolder);
 
         kieSession.insert(shiftAssignment_2Sun);
         kieSession.insert(shiftAssignment_7Fri1);
@@ -102,14 +98,15 @@ public class DroolsReproducerTest {
         assertEquals(5, kieSession.fireAllRules()); // this assert is incorrect but it makes sure the bug reproduces
 
         dumpSession(kieSession);
-        Score<?> score = ((ScoreHolder) kieSession.getGlobal("scoreHolder")).extractScore(0);
-        assertEquals("0hard/0soft", score.toString()); // this assert is incorrect but it makes sure the bug reproduces
+        // this assert is incorrect but it makes sure the bug reproduces
+        assertEquals("0hard/0soft", scoreHolder.extractScore(0).toString());
 
         // And this is how the corrupted score was detected - we make no additional changes to the facts,
         // we just insert them to a fresh session => same rules should fire.
         // Surprisingly, the following session will fire correctly, while the previous didn't.
         kieSession = kieContainer.newKieSession();
-        kieSession.setGlobal("scoreHolder", new HardSoftScoreDefinition().buildScoreHolder(true));
+        scoreHolder = new HardSoftScoreDefinition().buildScoreHolder(true);
+        kieSession.setGlobal("scoreHolder", scoreHolder);
 
         kieSession.insert(shiftAssignment_2Sun);
         kieSession.insert(shiftAssignment_7Fri1);
@@ -120,7 +117,7 @@ public class DroolsReproducerTest {
         System.out.println("FIRE");
         assertEquals(4, kieSession.fireAllRules());
         dumpSession(kieSession);
-        assertEquals("0hard/-1soft", ((ScoreHolder) kieSession.getGlobal("scoreHolder")).extractScore(0).toString());
+        assertEquals("0hard/-1soft", scoreHolder.extractScore(0).toString());
     }
 
     private void dumpSession(KieSession ks) {
