@@ -7,14 +7,11 @@ import org.kie.api.KieServices;
 import org.kie.api.builder.KieFileSystem;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.optaplanner.core.api.score.holder.ScoreHolder;
-import org.optaplanner.core.impl.score.buildin.simple.SimpleScoreDefinition;
 
 public class Drools1174Test {
 
     KieContainer kieContainer;
     KieSession kieSession;
-    ScoreHolder scoreHolder = new SimpleScoreDefinition().buildScoreHolder(true);
     private final SeatDesignation seatDesignation0 = new SeatDesignation();
     private final SeatDesignation seatDesignation1 = new SeatDesignation();
     private final SeatDesignation seatDesignation2 = new SeatDesignation();
@@ -32,7 +29,6 @@ public class Drools1174Test {
         kieServices.newKieBuilder(kfs).buildAll();
         kieContainer = kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
         kieSession = kieContainer.newKieSession();
-        kieSession.setGlobal("scoreHolder", scoreHolder);
 
         seatDesignation0.setId(0);
         seatDesignation0.setSeatTable(table2);
@@ -72,21 +68,18 @@ public class Drools1174Test {
 
     @Test
     public void test() {
-        kieSession.fireAllRules();
+        Assert.assertEquals(2, kieSession.fireAllRules());
         seatDesignation3.setSeatTable(table1);
         kieSession.update(kieSession.getFactHandle(seatDesignation3), seatDesignation3);
         seatDesignation2.setSeatTable(null);
         kieSession.update(kieSession.getFactHandle(seatDesignation2), seatDesignation2);
         seatDesignation1.setSeatTable(table2);
         kieSession.update(kieSession.getFactHandle(seatDesignation1), seatDesignation1);
-        kieSession.fireAllRules();
         // This is the corrupted score, just to make sure the bug is reproducible
-        Assert.assertEquals("-300", scoreHolder.extractScore(0).toString());
-        kieSession = kieContainer.newKieSession();
-        scoreHolder = new SimpleScoreDefinition().buildScoreHolder(true);
-        kieSession.setGlobal("scoreHolder", scoreHolder);
+        Assert.assertEquals(1, kieSession.fireAllRules());
 
         // Insert everything into a fresh session to see the uncorrupted score
+        kieSession = kieContainer.newKieSession();
         kieSession.insert(seatDesignation0);
         kieSession.insert(seatDesignation1);
         kieSession.insert(seatDesignation2);
@@ -96,8 +89,7 @@ public class Drools1174Test {
         kieSession.insert(JobType.DOCTOR);
         kieSession.insert(table1);
         kieSession.insert(table2);
-        kieSession.fireAllRules();
-        Assert.assertEquals("-200", scoreHolder.extractScore(0).toString());
+        Assert.assertEquals(2, kieSession.fireAllRules());
     }
 
     public static enum JobType {
