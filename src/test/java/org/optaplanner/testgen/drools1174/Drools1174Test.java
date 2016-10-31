@@ -12,15 +12,15 @@ public class Drools1174Test {
 
     KieContainer kieContainer;
     KieSession kieSession;
-    private final SeatDesignation seatDesignation0 = new SeatDesignation();
-    private final SeatDesignation seatDesignation1 = new SeatDesignation();
-    private final SeatDesignation seatDesignation2 = new SeatDesignation();
-    private final SeatDesignation seatDesignation3 = new SeatDesignation();
-    private final SeatDesignation seatDesignation4 = new SeatDesignation();
     private final String doctor = "D";
     private final String politician = "P";
     private final Long table1 = 0L;
     private final Long table2 = 1L;
+    private final SeatDesignation seatDesignation0 = new SeatDesignation(0, politician);
+    private final SeatDesignation seatDesignation1 = new SeatDesignation(1, politician);
+    private final SeatDesignation seatDesignation2 = new SeatDesignation(2, politician);
+    private final SeatDesignation seatDesignation3 = new SeatDesignation(3, doctor);
+    private final SeatDesignation seatDesignation4 = new SeatDesignation(4, doctor);
 
     @Before
     public void setUp() {
@@ -47,25 +47,10 @@ public class Drools1174Test {
         kieContainer = kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
         kieSession = kieContainer.newKieSession();
 
-        seatDesignation0.setId(0);
         seatDesignation0.setSeatTable(table2);
-        seatDesignation0.setGuestJobType(politician);
-
-        // seat designation 1
-        seatDesignation1.setId(1);
-        seatDesignation1.setGuestJobType(politician);
-        // seat designation 2
-        seatDesignation2.setId(2);
         seatDesignation2.setSeatTable(table2);
-        seatDesignation2.setGuestJobType(politician);
-        // seat designation 3
-        seatDesignation3.setId(3);
         seatDesignation3.setSeatTable(table1);
-        seatDesignation3.setGuestJobType(doctor);
-        // seat designation 4
-        seatDesignation4.setId(4);
         seatDesignation4.setSeatTable(table1);
-        seatDesignation4.setGuestJobType(doctor);
 
         kieSession.insert(seatDesignation0);
         kieSession.insert(seatDesignation1);
@@ -107,24 +92,21 @@ public class Drools1174Test {
 
     public static class SeatDesignation {
 
-        private int id;
-        private String guestJobType;
+        private final int id;
+        private final String guestJobType;
         private Long seatTable;
+
+        public SeatDesignation(int id, String guestJobType) {
+            this.id = id;
+            this.guestJobType = guestJobType;
+        }
 
         public String getGuestJobType() {
             return guestJobType;
         }
 
-        public void setGuestJobType(String guestJobType) {
-            this.guestJobType = guestJobType;
-        }
-
         public int getId() {
             return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
         }
 
         public Long getSeatTable() {
