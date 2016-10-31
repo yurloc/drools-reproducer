@@ -9,12 +9,6 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.optaplanner.core.api.score.holder.ScoreHolder;
 import org.optaplanner.core.impl.score.buildin.simple.SimpleScoreDefinition;
-import org.optaplanner.examples.dinnerparty.domain.Guest;
-import org.optaplanner.examples.dinnerparty.domain.Job;
-import org.optaplanner.examples.dinnerparty.domain.JobType;
-import org.optaplanner.examples.dinnerparty.domain.Seat;
-import org.optaplanner.examples.dinnerparty.domain.SeatDesignation;
-import org.optaplanner.examples.dinnerparty.domain.Table;
 
 public class Drools1174Test {
 
@@ -26,19 +20,6 @@ public class Drools1174Test {
     private final SeatDesignation seatDesignation2 = new SeatDesignation();
     private final SeatDesignation seatDesignation3 = new SeatDesignation();
     private final SeatDesignation seatDesignation4 = new SeatDesignation();
-    private final Guest guest_P1 = new Guest();
-    private final Guest guest_P2 = new Guest();
-    private final Guest guest_P3 = new Guest();
-    private final Guest guest_D1 = new Guest();
-    private final Guest guest_D2 = new Guest();
-    private final Job job_Doc1 = new Job();
-    private final Job job_Doc2 = new Job();
-    private final Job job_Pol1 = new Job();
-    private final Job job_Pol2 = new Job();
-    private final Seat seat1A = new Seat();
-    private final Seat seat1B = new Seat();
-    private final Seat seat2A = new Seat();
-    private final Seat seat2B = new Seat();
     private final Table table1 = new Table();
     private final Table table2 = new Table();
 
@@ -53,38 +34,30 @@ public class Drools1174Test {
         kieSession = kieContainer.newKieSession();
         kieSession.setGlobal("scoreHolder", scoreHolder);
 
-        seatDesignation0.setId(0L);
-        seatDesignation0.setSeat(seat2A);
-        seatDesignation0.setGuest(guest_P1);
-        guest_P1.setJob(job_Pol2);
-        job_Pol2.setJobType(JobType.POLITICIAN);
-        seat2A.setTable(table2);
+        seatDesignation0.setId(0);
+        seatDesignation0.setSeatTable(table2);
+        seatDesignation0.setGuestJob("P21");
+        seatDesignation0.setGuestJobType(JobType.POLITICIAN);
 
         // seat designation 1
-        seatDesignation1.setId(1L);
-        seatDesignation1.setGuest(guest_P2);
-        guest_P2.setJob(job_Pol1);
-        job_Pol1.setJobType(JobType.POLITICIAN);
+        seatDesignation1.setId(1);
+        seatDesignation1.setGuestJob("P11");
+        seatDesignation1.setGuestJobType(JobType.POLITICIAN);
         // seat designation 2
-        seatDesignation2.setId(2L);
-        seatDesignation2.setSeat(seat2B);
-        seatDesignation2.setGuest(guest_P3);
-        guest_P3.setJob(job_Pol1);
-        seat2B.setTable(table2);
+        seatDesignation2.setId(2);
+        seatDesignation2.setSeatTable(table2);
+        seatDesignation2.setGuestJob("P12");
+        seatDesignation2.setGuestJobType(JobType.POLITICIAN);
         // seat designation 3
-        seatDesignation3.setId(3L);
-        seatDesignation3.setSeat(seat1A);
-        seatDesignation3.setGuest(guest_D1);
-        guest_D1.setJob(job_Doc1);
-        job_Doc1.setJobType(JobType.DOCTOR);
-        seat1A.setTable(table1);
+        seatDesignation3.setId(3);
+        seatDesignation3.setSeatTable(table1);
+        seatDesignation3.setGuestJob("D11");
+        seatDesignation3.setGuestJobType(JobType.DOCTOR);
         // seat designation 4
-        seatDesignation4.setId(4L);
-        seatDesignation4.setSeat(seat1B);
-        seatDesignation4.setGuest(guest_D2);
-        guest_D2.setJob(job_Doc2);
-        job_Doc2.setJobType(JobType.DOCTOR);
-        seat1B.setTable(table1);
+        seatDesignation4.setId(4);
+        seatDesignation4.setSeatTable(table1);
+        seatDesignation4.setGuestJob("D21");
+        seatDesignation4.setGuestJobType(JobType.DOCTOR);
 
         kieSession.insert(seatDesignation0);
         kieSession.insert(seatDesignation1);
@@ -100,11 +73,11 @@ public class Drools1174Test {
     @Test
     public void test() {
         kieSession.fireAllRules();
-        seatDesignation3.setSeat(seat1A);
+        seatDesignation3.setSeatTable(table1);
         kieSession.update(kieSession.getFactHandle(seatDesignation3), seatDesignation3);
-        seatDesignation2.setSeat(null);
+        seatDesignation2.setSeatTable(null);
         kieSession.update(kieSession.getFactHandle(seatDesignation2), seatDesignation2);
-        seatDesignation1.setSeat(seat2B);
+        seatDesignation1.setSeatTable(table2);
         kieSession.update(kieSession.getFactHandle(seatDesignation1), seatDesignation1);
         kieSession.fireAllRules();
         // This is the corrupted score, just to make sure the bug is reproducible
@@ -125,5 +98,56 @@ public class Drools1174Test {
         kieSession.insert(table2);
         kieSession.fireAllRules();
         Assert.assertEquals("-200", scoreHolder.extractScore(0).toString());
+    }
+
+    public static enum JobType {
+        DOCTOR, POLITICIAN
+    }
+
+    public static class SeatDesignation {
+
+        private int id;
+        private Table seatTable;
+        private String guestJob;
+        private JobType guestJobType;
+
+        public boolean differentKindIfNeeded(String otherGuestJob) {
+            return !guestJob.equals(otherGuestJob);
+        }
+
+        public String getGuestJob() {
+            return guestJob;
+        }
+
+        public void setGuestJob(String guestJob) {
+            this.guestJob = guestJob;
+        }
+
+        public JobType getGuestJobType() {
+            return guestJobType;
+        }
+
+        public void setGuestJobType(JobType guestJobType) {
+            this.guestJobType = guestJobType;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public Table getSeatTable() {
+            return seatTable;
+        }
+
+        public void setSeatTable(Table seatTable) {
+            this.seatTable = seatTable;
+        }
+    }
+
+    public static class Table {
     }
 }
