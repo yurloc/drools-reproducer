@@ -17,26 +17,25 @@ public class Drools1174Test {
     private final SeatDesignation seatDesignation2 = new SeatDesignation();
     private final SeatDesignation seatDesignation3 = new SeatDesignation();
     private final SeatDesignation seatDesignation4 = new SeatDesignation();
-    private final Table table1 = new Table();
-    private final Table table2 = new Table();
+    private final String doctor = "D";
+    private final String politician = "P";
+    private final Long table1 = 0L;
+    private final Long table2 = 1L;
 
     @Before
     public void setUp() {
         String rule = "package pkg;\n"
                 + "    dialect \"java\"\n"
                 + "\n"
-                + "import org.optaplanner.testgen.drools1174.Drools1174Test.JobType;\n"
-                + "import org.optaplanner.testgen.drools1174.Drools1174Test.SeatDesignation;\n"
-                + "import org.optaplanner.testgen.drools1174.Drools1174Test.Table;\n"
+                + "import " + Drools1174Test.SeatDesignation.class.getCanonicalName() + ";\n"
                 + "\n"
                 + "rule \"twoSameJobTypePerTable\"\n"
                 + "    when\n"
-                + "        $jobType : JobType()\n"
-                + "        $table : Table()\n"
+                + "        $jobType : String()\n"
+                + "        $table : Long()\n"
                 + "        not (\n"
-                + "            SeatDesignation(guestJobType == $jobType, seatTable == $table, $leftId : id, $firstJob : guestJob)\n"
-                + "            and SeatDesignation(guestJobType == $jobType, seatTable == $table, id > $leftId,\n"
-                + "                    differentKindIfNeeded($firstJob))\n"
+                + "            SeatDesignation(guestJobType == $jobType, seatTable == $table, $leftId : id)\n"
+                + "            and SeatDesignation(guestJobType == $jobType, seatTable == $table, id > $leftId)\n"
                 + "        )\n"
                 + "    then\n"
                 + "end\n"
@@ -50,36 +49,31 @@ public class Drools1174Test {
 
         seatDesignation0.setId(0);
         seatDesignation0.setSeatTable(table2);
-        seatDesignation0.setGuestJob("P21");
-        seatDesignation0.setGuestJobType(JobType.POLITICIAN);
+        seatDesignation0.setGuestJobType(politician);
 
         // seat designation 1
         seatDesignation1.setId(1);
-        seatDesignation1.setGuestJob("P11");
-        seatDesignation1.setGuestJobType(JobType.POLITICIAN);
+        seatDesignation1.setGuestJobType(politician);
         // seat designation 2
         seatDesignation2.setId(2);
         seatDesignation2.setSeatTable(table2);
-        seatDesignation2.setGuestJob("P12");
-        seatDesignation2.setGuestJobType(JobType.POLITICIAN);
+        seatDesignation2.setGuestJobType(politician);
         // seat designation 3
         seatDesignation3.setId(3);
         seatDesignation3.setSeatTable(table1);
-        seatDesignation3.setGuestJob("D11");
-        seatDesignation3.setGuestJobType(JobType.DOCTOR);
+        seatDesignation3.setGuestJobType(doctor);
         // seat designation 4
         seatDesignation4.setId(4);
         seatDesignation4.setSeatTable(table1);
-        seatDesignation4.setGuestJob("D21");
-        seatDesignation4.setGuestJobType(JobType.DOCTOR);
+        seatDesignation4.setGuestJobType(doctor);
 
         kieSession.insert(seatDesignation0);
         kieSession.insert(seatDesignation1);
         kieSession.insert(seatDesignation2);
         kieSession.insert(seatDesignation3);
         kieSession.insert(seatDesignation4);
-        kieSession.insert(JobType.POLITICIAN);
-        kieSession.insert(JobType.DOCTOR);
+        kieSession.insert(politician);
+        kieSession.insert(doctor);
         kieSession.insert(table1);
         kieSession.insert(table2);
     }
@@ -94,6 +88,7 @@ public class Drools1174Test {
         seatDesignation1.setSeatTable(table2);
         kieSession.update(kieSession.getFactHandle(seatDesignation1), seatDesignation1);
         // This is the corrupted score, just to make sure the bug is reproducible
+        // expected: 0
         Assert.assertEquals(1, kieSession.fireAllRules());
 
         // Insert everything into a fresh session to see the uncorrupted score
@@ -103,41 +98,24 @@ public class Drools1174Test {
         kieSession.insert(seatDesignation2);
         kieSession.insert(seatDesignation3);
         kieSession.insert(seatDesignation4);
-        kieSession.insert(JobType.POLITICIAN);
-        kieSession.insert(JobType.DOCTOR);
+        kieSession.insert(politician);
+        kieSession.insert(doctor);
         kieSession.insert(table1);
         kieSession.insert(table2);
         Assert.assertEquals(2, kieSession.fireAllRules());
     }
 
-    public static enum JobType {
-        DOCTOR, POLITICIAN
-    }
-
     public static class SeatDesignation {
 
         private int id;
-        private Table seatTable;
-        private String guestJob;
-        private JobType guestJobType;
+        private String guestJobType;
+        private Long seatTable;
 
-        public boolean differentKindIfNeeded(String otherGuestJob) {
-            return !guestJob.equals(otherGuestJob);
-        }
-
-        public String getGuestJob() {
-            return guestJob;
-        }
-
-        public void setGuestJob(String guestJob) {
-            this.guestJob = guestJob;
-        }
-
-        public JobType getGuestJobType() {
+        public String getGuestJobType() {
             return guestJobType;
         }
 
-        public void setGuestJobType(JobType guestJobType) {
+        public void setGuestJobType(String guestJobType) {
             this.guestJobType = guestJobType;
         }
 
@@ -149,15 +127,12 @@ public class Drools1174Test {
             this.id = id;
         }
 
-        public Table getSeatTable() {
+        public Long getSeatTable() {
             return seatTable;
         }
 
-        public void setSeatTable(Table seatTable) {
+        public void setSeatTable(Long seatTable) {
             this.seatTable = seatTable;
         }
-    }
-
-    public static class Table {
     }
 }
