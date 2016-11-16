@@ -66,6 +66,8 @@ public class Drools1174Test {
     @Test
     public void test() {
         Assert.assertEquals(2, kieSession.fireAllRules());
+        // demonstrate that no additional rules fire when there are no fact changes
+        Assert.assertEquals(0, kieSession.fireAllRules());
         // no change but the update is necessary
         kieSession.update(kieSession.getFactHandle(seatDesignation3), seatDesignation3);
         seatDesignation2.setSeatTable(null);
@@ -73,8 +75,9 @@ public class Drools1174Test {
         seatDesignation1.setSeatTable(table2);
         kieSession.update(kieSession.getFactHandle(seatDesignation1), seatDesignation1);
         // This is the corrupted score, just to make sure the bug is reproducible
-        // expected: 0
+        // expected: 0 because the conditions haven't changed
         Assert.assertEquals(1, kieSession.fireAllRules());
+        Assert.assertEquals(0, kieSession.fireAllRules());
 
         // Insert everything into a fresh session to see the uncorrupted score
         kieSession = kieContainer.newKieSession();
@@ -88,6 +91,7 @@ public class Drools1174Test {
         kieSession.insert(table1);
         kieSession.insert(table2);
         Assert.assertEquals(2, kieSession.fireAllRules());
+        Assert.assertEquals(0, kieSession.fireAllRules());
     }
 
     public static class SeatDesignation {
