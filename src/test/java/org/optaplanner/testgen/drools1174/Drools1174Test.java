@@ -66,7 +66,7 @@ public class Drools1174Test {
     @Test
     public void test() {
         Assert.assertEquals(2, kieSession.fireAllRules());
-        seatDesignation3.setSeatTable(table1);
+        // no change but the update is necessary
         kieSession.update(kieSession.getFactHandle(seatDesignation3), seatDesignation3);
         seatDesignation2.setSeatTable(null);
         kieSession.update(kieSession.getFactHandle(seatDesignation2), seatDesignation2);
