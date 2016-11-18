@@ -35,6 +35,7 @@ public class Drools1174Test {
                 + "            and Seat(guestJob == $jobType, table == $table, id > $leftId)\n"
                 + "        )\n"
                 + "    then\n"
+                + "        System.out.println(\"Table \" + $table + \", \" + $jobType);\n"
                 + "end\n"
                 + "";
         KieSession kieSession = new KieHelper().addContent(rule, ResourceType.DRL).build().newKieSession();
@@ -54,6 +55,7 @@ public class Drools1174Test {
         kieSession.insert(table1);
         kieSession.insert(table2);
 
+        System.out.println("FIRE");
         Assert.assertEquals(2, kieSession.fireAllRules());
         // no change but the update is necessary
         kieSession.update(fhSeat3, seat3);
@@ -63,6 +65,7 @@ public class Drools1174Test {
         kieSession.update(fhSeat1, seat1);
         // This is the corrupted score, just to make sure the bug is reproducible
         // expected: 0 because the conditions haven't changed
+        System.out.println("FIRE");
         Assert.assertEquals(1, kieSession.fireAllRules());
     }
 
