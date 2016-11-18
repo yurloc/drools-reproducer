@@ -13,8 +13,8 @@ public class Drools1174Test {
     public void test() {
         String doctor = "D";
         String politician = "P";
-        Long table1 = 0L;
-        Long table2 = 1L;
+        Long table1 = 1L;
+        Long table2 = 2L;
         Seat seat0 = new Seat(0, politician);
         Seat seat1 = new Seat(1, politician);
         Seat seat2 = new Seat(2, politician);
