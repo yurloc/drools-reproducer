@@ -2,17 +2,15 @@ package org.optaplanner.testgen.drools1174;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.kie.api.KieServices;
-import org.kie.api.builder.KieFileSystem;
-import org.kie.api.runtime.KieContainer;
+import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
+import org.kie.internal.utils.KieHelper;
 
 public class Drools1174Test {
 
     @Test
     public void test() {
-        KieContainer kieContainer;
-        KieSession kieSession;
         String doctor = "D";
         String politician = "P";
         Long table1 = 0L;
@@ -39,55 +37,33 @@ public class Drools1174Test {
                 + "    then\n"
                 + "end\n"
                 + "";
-        KieServices kieServices = KieServices.Factory.get();
-        KieFileSystem kfs = kieServices.newKieFileSystem();
-        kfs.write("src/main/resources/dinnerPartyScoreRules.drl", rule);
-        kieServices.newKieBuilder(kfs).buildAll();
-        kieContainer = kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
-        kieSession = kieContainer.newKieSession();
+        KieSession kieSession = new KieHelper().addContent(rule, ResourceType.DRL).build().newKieSession();
 
         seat0.setTable(table2);
         seat2.setTable(table2);
         seat3.setTable(table1);
         seat4.setTable(table1);
 
-        kieSession.insert(seat0);
-        kieSession.insert(seat1);
-        kieSession.insert(seat2);
-        kieSession.insert(seat3);
-        kieSession.insert(seat4);
+        FactHandle fhSeat0 = kieSession.insert(seat0);
+        FactHandle fhSeat1 = kieSession.insert(seat1);
+        FactHandle fhSeat2 = kieSession.insert(seat2);
+        FactHandle fhSeat3 = kieSession.insert(seat3);
+        FactHandle fhSeat4 = kieSession.insert(seat4);
         kieSession.insert(politician);
         kieSession.insert(doctor);
         kieSession.insert(table1);
         kieSession.insert(table2);
 
         Assert.assertEquals(2, kieSession.fireAllRules());
-        // demonstrate that no additional rules fire when there are no fact changes
-        Assert.assertEquals(0, kieSession.fireAllRules());
         // no change but the update is necessary
-        kieSession.update(kieSession.getFactHandle(seat3), seat3);
+        kieSession.update(fhSeat3, seat3);
         seat2.setTable(null);
-        kieSession.update(kieSession.getFactHandle(seat2), seat2);
+        kieSession.update(fhSeat2, seat2);
         seat1.setTable(table2);
-        kieSession.update(kieSession.getFactHandle(seat1), seat1);
+        kieSession.update(fhSeat1, seat1);
         // This is the corrupted score, just to make sure the bug is reproducible
         // expected: 0 because the conditions haven't changed
         Assert.assertEquals(1, kieSession.fireAllRules());
-        Assert.assertEquals(0, kieSession.fireAllRules());
-
-        // Insert everything into a fresh session to see the uncorrupted score
-        kieSession = kieContainer.newKieSession();
-        kieSession.insert(seat0);
-        kieSession.insert(seat1);
-        kieSession.insert(seat2);
-        kieSession.insert(seat3);
-        kieSession.insert(seat4);
-        kieSession.insert(politician);
-        kieSession.insert(doctor);
-        kieSession.insert(table1);
-        kieSession.insert(table2);
-        Assert.assertEquals(2, kieSession.fireAllRules());
-        Assert.assertEquals(0, kieSession.fireAllRules());
     }
 
     public static class Seat {
