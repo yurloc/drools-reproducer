@@ -48,9 +48,11 @@ public class Drools1174Test {
         kieSession.insert(table2);
 
         assertEquals(2, kieSession.fireAllRules());
+
         kieSession.update(fh3, seat3); // no change but the update is necessary to reproduce the bug
         kieSession.update(fh2, seat2.setTable(null));
         kieSession.update(fh1, seat1.setTable(table2));
+
         assertEquals(0, kieSession.fireAllRules());
     }
 
