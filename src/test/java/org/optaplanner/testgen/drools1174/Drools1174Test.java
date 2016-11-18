@@ -1,6 +1,7 @@
 package org.optaplanner.testgen.drools1174;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
@@ -11,62 +12,52 @@ public class Drools1174Test {
 
     @Test
     public void test() {
+        // DROOLS-1174
+        String rule = "import " + Drools1174Test.Seat.class.getCanonicalName() + ";\n"
+                + "\n"
+                + "rule twoSameJobTypePerTable when\n"
+                + "    $job: String()\n"
+                + "    $table : Long()\n"
+                + "    not (\n"
+                + "        Seat( guestJob == $job, table == $table, $leftId : id )\n"
+                + "        and Seat( guestJob == $job, table == $table, id > $leftId )\n"
+                + "    )\n"
+                + "then\n"
+                + "        System.out.println(\"Table \" + $table + \", \" + $job);\n"
+                + "end\n"
+                + "";
+
+        KieSession kieSession = new KieHelper().addContent(rule, ResourceType.DRL).build().newKieSession();
+
         String doctor = "D";
         String politician = "P";
         Long table1 = 1L;
         Long table2 = 2L;
-        Seat seat0 = new Seat(0, politician);
-        Seat seat1 = new Seat(1, politician);
-        Seat seat2 = new Seat(2, politician);
-        Seat seat3 = new Seat(3, doctor);
-        Seat seat4 = new Seat(4, doctor);
+        Seat seat0 = new Seat(0, politician, table2);
+        Seat seat1 = new Seat(1, politician, null);
+        Seat seat2 = new Seat(2, politician, table2);
+        Seat seat3 = new Seat(3, doctor, table1);
+        Seat seat4 = new Seat(4, doctor, table1);
 
-        String rule = "package pkg;\n"
-                + "    dialect \"java\"\n"
-                + "\n"
-                + "import " + Drools1174Test.Seat.class.getCanonicalName() + ";\n"
-                + "\n"
-                + "rule \"twoSameJobTypePerTable\"\n"
-                + "    when\n"
-                + "        $jobType : String()\n"
-                + "        $table : Long()\n"
-                + "        not (\n"
-                + "            Seat(guestJob == $jobType, table == $table, $leftId : id)\n"
-                + "            and Seat(guestJob == $jobType, table == $table, id > $leftId)\n"
-                + "        )\n"
-                + "    then\n"
-                + "        System.out.println(\"Table \" + $table + \", \" + $jobType);\n"
-                + "end\n"
-                + "";
-        KieSession kieSession = new KieHelper().addContent(rule, ResourceType.DRL).build().newKieSession();
-
-        seat0.setTable(table2);
-        seat2.setTable(table2);
-        seat3.setTable(table1);
-        seat4.setTable(table1);
-
-        FactHandle fhSeat0 = kieSession.insert(seat0);
-        FactHandle fhSeat1 = kieSession.insert(seat1);
-        FactHandle fhSeat2 = kieSession.insert(seat2);
-        FactHandle fhSeat3 = kieSession.insert(seat3);
-        FactHandle fhSeat4 = kieSession.insert(seat4);
+        kieSession.insert(seat0);
+        FactHandle fh1 = kieSession.insert(seat1);
+        FactHandle fh2 = kieSession.insert(seat2);
+        FactHandle fh3 = kieSession.insert(seat3);
+        kieSession.insert(seat4);
         kieSession.insert(politician);
         kieSession.insert(doctor);
         kieSession.insert(table1);
         kieSession.insert(table2);
 
         System.out.println("FIRE");
-        Assert.assertEquals(2, kieSession.fireAllRules());
-        // no change but the update is necessary
-        kieSession.update(fhSeat3, seat3);
-        seat2.setTable(null);
-        kieSession.update(fhSeat2, seat2);
-        seat1.setTable(table2);
-        kieSession.update(fhSeat1, seat1);
+        assertEquals(2, kieSession.fireAllRules());
+        kieSession.update(fh3, seat3); // no change but the update is necessary to reproduce the bug
+        kieSession.update(fh2, seat2.setTable(null));
+        kieSession.update(fh1, seat1.setTable(table2));
         // This is the corrupted score, just to make sure the bug is reproducible
         // expected: 0 because the conditions haven't changed
         System.out.println("FIRE");
-        Assert.assertEquals(1, kieSession.fireAllRules());
+        assertEquals(1, kieSession.fireAllRules());
     }
 
     public static class Seat {
@@ -75,9 +66,10 @@ public class Drools1174Test {
         private final String guestJob;
         private Long table;
 
-        public Seat(int id, String guestJob) {
+        public Seat(int id, String guestJob, Long table) {
             this.id = id;
             this.guestJob = guestJob;
+            this.table = table;
         }
 
         public String getGuestJob() {
@@ -92,8 +84,9 @@ public class Drools1174Test {
             return table;
         }
 
-        public void setTable(Long table) {
+        public Seat setTable(Long table) {
             this.table = table;
+            return this;
         }
     }
 }
