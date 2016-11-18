@@ -1,7 +1,6 @@
 package org.optaplanner.testgen.drools1174;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieFileSystem;
@@ -10,32 +9,32 @@ import org.kie.api.runtime.KieSession;
 
 public class Drools1174Test {
 
-    KieContainer kieContainer;
-    KieSession kieSession;
-    private final String doctor = "D";
-    private final String politician = "P";
-    private final Long table1 = 0L;
-    private final Long table2 = 1L;
-    private final SeatDesignation seatDesignation0 = new SeatDesignation(0, politician);
-    private final SeatDesignation seatDesignation1 = new SeatDesignation(1, politician);
-    private final SeatDesignation seatDesignation2 = new SeatDesignation(2, politician);
-    private final SeatDesignation seatDesignation3 = new SeatDesignation(3, doctor);
-    private final SeatDesignation seatDesignation4 = new SeatDesignation(4, doctor);
+    @Test
+    public void test() {
+        KieContainer kieContainer;
+        KieSession kieSession;
+        String doctor = "D";
+        String politician = "P";
+        Long table1 = 0L;
+        Long table2 = 1L;
+        Seat seat0 = new Seat(0, politician);
+        Seat seat1 = new Seat(1, politician);
+        Seat seat2 = new Seat(2, politician);
+        Seat seat3 = new Seat(3, doctor);
+        Seat seat4 = new Seat(4, doctor);
 
-    @Before
-    public void setUp() {
         String rule = "package pkg;\n"
                 + "    dialect \"java\"\n"
                 + "\n"
-                + "import " + Drools1174Test.SeatDesignation.class.getCanonicalName() + ";\n"
+                + "import " + Drools1174Test.Seat.class.getCanonicalName() + ";\n"
                 + "\n"
                 + "rule \"twoSameJobTypePerTable\"\n"
                 + "    when\n"
                 + "        $jobType : String()\n"
                 + "        $table : Long()\n"
                 + "        not (\n"
-                + "            SeatDesignation(guestJobType == $jobType, seatTable == $table, $leftId : id)\n"
-                + "            and SeatDesignation(guestJobType == $jobType, seatTable == $table, id > $leftId)\n"
+                + "            Seat(guestJob == $jobType, table == $table, $leftId : id)\n"
+                + "            and Seat(guestJob == $jobType, table == $table, id > $leftId)\n"
                 + "        )\n"
                 + "    then\n"
                 + "end\n"
@@ -47,33 +46,30 @@ public class Drools1174Test {
         kieContainer = kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
         kieSession = kieContainer.newKieSession();
 
-        seatDesignation0.setSeatTable(table2);
-        seatDesignation2.setSeatTable(table2);
-        seatDesignation3.setSeatTable(table1);
-        seatDesignation4.setSeatTable(table1);
+        seat0.setTable(table2);
+        seat2.setTable(table2);
+        seat3.setTable(table1);
+        seat4.setTable(table1);
 
-        kieSession.insert(seatDesignation0);
-        kieSession.insert(seatDesignation1);
-        kieSession.insert(seatDesignation2);
-        kieSession.insert(seatDesignation3);
-        kieSession.insert(seatDesignation4);
+        kieSession.insert(seat0);
+        kieSession.insert(seat1);
+        kieSession.insert(seat2);
+        kieSession.insert(seat3);
+        kieSession.insert(seat4);
         kieSession.insert(politician);
         kieSession.insert(doctor);
         kieSession.insert(table1);
         kieSession.insert(table2);
-    }
 
-    @Test
-    public void test() {
         Assert.assertEquals(2, kieSession.fireAllRules());
         // demonstrate that no additional rules fire when there are no fact changes
         Assert.assertEquals(0, kieSession.fireAllRules());
         // no change but the update is necessary
-        kieSession.update(kieSession.getFactHandle(seatDesignation3), seatDesignation3);
-        seatDesignation2.setSeatTable(null);
-        kieSession.update(kieSession.getFactHandle(seatDesignation2), seatDesignation2);
-        seatDesignation1.setSeatTable(table2);
-        kieSession.update(kieSession.getFactHandle(seatDesignation1), seatDesignation1);
+        kieSession.update(kieSession.getFactHandle(seat3), seat3);
+        seat2.setTable(null);
+        kieSession.update(kieSession.getFactHandle(seat2), seat2);
+        seat1.setTable(table2);
+        kieSession.update(kieSession.getFactHandle(seat1), seat1);
         // This is the corrupted score, just to make sure the bug is reproducible
         // expected: 0 because the conditions haven't changed
         Assert.assertEquals(1, kieSession.fireAllRules());
@@ -81,11 +77,11 @@ public class Drools1174Test {
 
         // Insert everything into a fresh session to see the uncorrupted score
         kieSession = kieContainer.newKieSession();
-        kieSession.insert(seatDesignation0);
-        kieSession.insert(seatDesignation1);
-        kieSession.insert(seatDesignation2);
-        kieSession.insert(seatDesignation3);
-        kieSession.insert(seatDesignation4);
+        kieSession.insert(seat0);
+        kieSession.insert(seat1);
+        kieSession.insert(seat2);
+        kieSession.insert(seat3);
+        kieSession.insert(seat4);
         kieSession.insert(politician);
         kieSession.insert(doctor);
         kieSession.insert(table1);
@@ -94,31 +90,31 @@ public class Drools1174Test {
         Assert.assertEquals(0, kieSession.fireAllRules());
     }
 
-    public static class SeatDesignation {
+    public static class Seat {
 
         private final int id;
-        private final String guestJobType;
-        private Long seatTable;
+        private final String guestJob;
+        private Long table;
 
-        public SeatDesignation(int id, String guestJobType) {
+        public Seat(int id, String guestJob) {
             this.id = id;
-            this.guestJobType = guestJobType;
+            this.guestJob = guestJob;
         }
 
-        public String getGuestJobType() {
-            return guestJobType;
+        public String getGuestJob() {
+            return guestJob;
         }
 
         public int getId() {
             return id;
         }
 
-        public Long getSeatTable() {
-            return seatTable;
+        public Long getTable() {
+            return table;
         }
 
-        public void setSeatTable(Long seatTable) {
-            this.seatTable = seatTable;
+        public void setTable(Long table) {
+            this.table = table;
         }
     }
 }
