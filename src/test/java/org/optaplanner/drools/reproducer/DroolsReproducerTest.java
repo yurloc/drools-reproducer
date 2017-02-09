@@ -815,34 +815,6 @@ public class DroolsReproducerTest {
         //operation U #1043
         busStop_12.setTransferShuttleList(Arrays.<Shuttle>asList(shuttle_9));
         kieSession.update(kieSession.getFactHandle(busStop_12), busStop_12, "transferShuttleList");
-        //operation F #1044
-        kieSession.fireAllRules();
-        //operation F #1060
-        kieSession.fireAllRules();
-        //operation F #1085
-        kieSession.fireAllRules();
-        //operation F #1104
-        kieSession.fireAllRules();
-        //operation F #1123
-        kieSession.fireAllRules();
-        //operation F #1143
-        kieSession.fireAllRules();
-        //operation F #1163
-        kieSession.fireAllRules();
-        //operation F #1172
-        kieSession.fireAllRules();
-        //operation F #1181
-        kieSession.fireAllRules();
-        //operation F #1216
-        kieSession.fireAllRules();
-        //operation F #1246
-        kieSession.fireAllRules();
-        //operation F #1257
-        kieSession.fireAllRules();
-        //operation F #1270
-        kieSession.fireAllRules();
-        //operation F #1282
-        kieSession.fireAllRules();
         //operation F #1291
         kieSession.fireAllRules();
         //operation U #1298
