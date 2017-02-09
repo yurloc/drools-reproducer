@@ -797,78 +797,6 @@ public class DroolsReproducerTest {
         //operation U #1013
         busStop_12.setTransferShuttleList(Arrays.<Shuttle>asList());
         kieSession.update(kieSession.getFactHandle(busStop_12), busStop_12, "transferShuttleList");
-        //operation U #1014
-        busStop_18.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "nextStop");
-        //operation U #1015
-        coach_1.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_1), coach_1, "nextStop");
-        //operation U #1016
-        coach_3.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_3), coach_3, "nextStop");
-        //operation U #1017
-        shuttle_7.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(shuttle_7), shuttle_7, "nextStop");
-        //operation U #1018
-        busStop_11.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "nextStop");
-        //operation U #1019
-        busStop_17.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "nextStop");
-        //operation U #1020
-        busStop_13.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1021
-        coach_2.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1022
-        shuttle_6.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1023
-        busStop_14.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "nextStop");
-        //operation U #1024
-        busStop_16.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "nextStop");
-        //operation U #1025
-        busStop_10.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "nextStop");
-        //operation U #1026
-        busStop_18.setNextStop(busStop_10);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "nextStop");
-        //operation U #1027
-        coach_1.setNextStop(busStop_11);
-        kieSession.update(kieSession.getFactHandle(coach_1), coach_1, "nextStop");
-        //operation U #1028
-        coach_3.setNextStop(busStop_12);
-        kieSession.update(kieSession.getFactHandle(coach_3), coach_3, "nextStop");
-        //operation U #1029
-        shuttle_7.setNextStop(busStop_13);
-        kieSession.update(kieSession.getFactHandle(shuttle_7), shuttle_7, "nextStop");
-        //operation U #1030
-        busStop_11.setNextStop(busStop_14);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "nextStop");
-        //operation U #1031
-        busStop_17.setNextStop(busStop_15);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "nextStop");
-        //operation U #1032
-        busStop_13.setNextStop(busStop_16);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1033
-        coach_2.setNextStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1034
-        shuttle_6.setNextStop(busStop_18);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1035
-        busStop_14.setNextStop(busStop_19);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "nextStop");
-        //operation U #1036
-        busStop_16.setNextStop(busStop_20);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "nextStop");
-        //operation U #1037
-        busStop_10.setNextStop(busStop_21);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "nextStop");
         //operation U #1038
         busHub_0.setTransferShuttleList(Arrays.<Shuttle>asList(shuttle_4));
         kieSession.update(kieSession.getFactHandle(busHub_0), busHub_0, "transferShuttleList");
@@ -889,15 +817,6 @@ public class DroolsReproducerTest {
         kieSession.update(kieSession.getFactHandle(busStop_12), busStop_12, "transferShuttleList");
         //operation F #1044
         kieSession.fireAllRules();
-        //operation U #1045
-        coach_1.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_1), coach_1, "nextStop");
-        //operation U #1046
-        busStop_11.setPreviousBusOrStop(shuttle_9);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "previousBusOrStop");
-        //operation U #1047
-        shuttle_9.setNextStop(busStop_11);
-        kieSession.update(kieSession.getFactHandle(shuttle_9), shuttle_9, "nextStop");
         //operation U #1048
         busStop_11.setBus(shuttle_9);
         kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "bus");
@@ -909,15 +828,6 @@ public class DroolsReproducerTest {
         kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "bus");
         //operation F #1060
         kieSession.fireAllRules();
-        //operation U #1061
-        shuttle_9.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(shuttle_9), shuttle_9, "nextStop");
-        //operation U #1062
-        busStop_11.setPreviousBusOrStop(coach_1);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "previousBusOrStop");
-        //operation U #1063
-        coach_1.setNextStop(busStop_11);
-        kieSession.update(kieSession.getFactHandle(coach_1), coach_1, "nextStop");
         //operation U #1064
         busStop_11.setBus(coach_1);
         kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "bus");
@@ -929,42 +839,6 @@ public class DroolsReproducerTest {
         kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "bus");
         //operation F #1085
         kieSession.fireAllRules();
-        //operation U #1086
-        busStop_18.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "nextStop");
-        //operation U #1087
-        busStop_10.setPreviousBusOrStop(coach_2);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "previousBusOrStop");
-        //operation U #1088
-        coach_2.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1089
-        busStop_17.setPreviousBusOrStop(busStop_18);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "previousBusOrStop");
-        //operation U #1090
-        busStop_17.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "nextStop");
-        //operation U #1091
-        busStop_15.setPreviousBusOrStop(busStop_10);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "previousBusOrStop");
-        //operation U #1092
-        busStop_10.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "nextStop");
-        //operation U #1093
-        busStop_21.setPreviousBusOrStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "previousBusOrStop");
-        //operation U #1094
-        coach_2.setNextStop(busStop_10);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1095
-        busStop_18.setNextStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "nextStop");
-        //operation U #1096
-        busStop_10.setNextStop(busStop_15);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "nextStop");
-        //operation U #1097
-        busStop_17.setNextStop(busStop_21);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "nextStop");
         //operation U #1098
         busStop_10.setBus(coach_2);
         kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "bus");
@@ -973,42 +847,6 @@ public class DroolsReproducerTest {
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
         //operation F #1104
         kieSession.fireAllRules();
-        //operation U #1105
-        busStop_18.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "nextStop");
-        //operation U #1106
-        busStop_17.setPreviousBusOrStop(coach_2);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "previousBusOrStop");
-        //operation U #1107
-        coach_2.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1108
-        busStop_10.setPreviousBusOrStop(busStop_18);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "previousBusOrStop");
-        //operation U #1109
-        busStop_10.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "nextStop");
-        //operation U #1110
-        busStop_15.setPreviousBusOrStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "previousBusOrStop");
-        //operation U #1111
-        busStop_17.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "nextStop");
-        //operation U #1112
-        busStop_21.setPreviousBusOrStop(busStop_10);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "previousBusOrStop");
-        //operation U #1113
-        coach_2.setNextStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1114
-        busStop_18.setNextStop(busStop_10);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "nextStop");
-        //operation U #1115
-        busStop_17.setNextStop(busStop_15);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "nextStop");
-        //operation U #1116
-        busStop_10.setNextStop(busStop_21);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "nextStop");
         //operation U #1117
         busStop_17.setBus(coach_2);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
@@ -1017,24 +855,6 @@ public class DroolsReproducerTest {
         kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "bus");
         //operation F #1123
         kieSession.fireAllRules();
-        //operation U #1124
-        busStop_13.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1125
-        busStop_16.setPreviousBusOrStop(coach_2);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "previousBusOrStop");
-        //operation U #1126
-        coach_2.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1127
-        busStop_17.setPreviousBusOrStop(busStop_13);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "previousBusOrStop");
-        //operation U #1128
-        coach_2.setNextStop(busStop_16);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1129
-        busStop_13.setNextStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
         //operation U #1130
         busStop_16.setBus(coach_2);
         kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "bus");
@@ -1049,24 +869,6 @@ public class DroolsReproducerTest {
         kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "bus");
         //operation F #1143
         kieSession.fireAllRules();
-        //operation U #1144
-        coach_2.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1145
-        busStop_16.setPreviousBusOrStop(busStop_13);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "previousBusOrStop");
-        //operation U #1146
-        busStop_13.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1147
-        busStop_17.setPreviousBusOrStop(coach_2);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "previousBusOrStop");
-        //operation U #1148
-        busStop_13.setNextStop(busStop_16);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1149
-        coach_2.setNextStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
         //operation U #1150
         busStop_16.setBus(shuttle_7);
         kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "bus");
@@ -1081,70 +883,16 @@ public class DroolsReproducerTest {
         kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "bus");
         //operation F #1163
         kieSession.fireAllRules();
-        //operation U #1164
-        busStop_18.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "nextStop");
-        //operation U #1165
-        busStop_10.setPreviousBusOrStop(shuttle_6);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "previousBusOrStop");
-        //operation U #1166
-        shuttle_6.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1167
-        busStop_18.setPreviousBusOrStop(shuttle_5);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "previousBusOrStop");
-        //operation U #1168
-        shuttle_6.setNextStop(busStop_10);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1169
-        shuttle_5.setNextStop(busStop_18);
-        kieSession.update(kieSession.getFactHandle(shuttle_5), shuttle_5, "nextStop");
         //operation U #1170
         busStop_18.setBus(shuttle_5);
         kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "bus");
         //operation F #1172
         kieSession.fireAllRules();
-        //operation U #1173
-        shuttle_5.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(shuttle_5), shuttle_5, "nextStop");
-        //operation U #1174
-        busStop_18.setPreviousBusOrStop(shuttle_6);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "previousBusOrStop");
-        //operation U #1175
-        shuttle_6.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1176
-        busStop_10.setPreviousBusOrStop(busStop_18);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "previousBusOrStop");
-        //operation U #1177
-        shuttle_6.setNextStop(busStop_18);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1178
-        busStop_18.setNextStop(busStop_10);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "nextStop");
         //operation U #1179
         busStop_18.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "bus");
         //operation F #1181
         kieSession.fireAllRules();
-        //operation U #1182
-        shuttle_6.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1183
-        busStop_18.setPreviousBusOrStop(busStop_11);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "previousBusOrStop");
-        //operation U #1184
-        busStop_11.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "nextStop");
-        //operation U #1185
-        busStop_14.setPreviousBusOrStop(shuttle_6);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "previousBusOrStop");
-        //operation U #1186
-        busStop_11.setNextStop(busStop_18);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "nextStop");
-        //operation U #1187
-        shuttle_6.setNextStop(busStop_14);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
         //operation U #1188
         busStop_18.setBus(coach_1);
         kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "bus");
@@ -1162,24 +910,6 @@ public class DroolsReproducerTest {
         kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "bus");
         //operation F #1216
         kieSession.fireAllRules();
-        //operation U #1217
-        busStop_11.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "nextStop");
-        //operation U #1218
-        busStop_18.setPreviousBusOrStop(shuttle_6);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "previousBusOrStop");
-        //operation U #1219
-        shuttle_6.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1220
-        busStop_14.setPreviousBusOrStop(busStop_11);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "previousBusOrStop");
-        //operation U #1221
-        shuttle_6.setNextStop(busStop_18);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1222
-        busStop_11.setNextStop(busStop_14);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "nextStop");
         //operation U #1223
         busStop_18.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "bus");
@@ -1197,116 +927,26 @@ public class DroolsReproducerTest {
         kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "bus");
         //operation F #1246
         kieSession.fireAllRules();
-        //operation U #1247
-        busStop_16.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "nextStop");
-        //operation U #1248
-        busStop_20.setPreviousBusOrStop(busStop_13);
-        kieSession.update(kieSession.getFactHandle(busStop_20), busStop_20, "previousBusOrStop");
-        //operation U #1249
-        busStop_13.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1250
-        busStop_16.setPreviousBusOrStop(busStop_15);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "previousBusOrStop");
-        //operation U #1251
-        busStop_13.setNextStop(busStop_20);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1252
-        busStop_15.setNextStop(busStop_16);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "nextStop");
         //operation U #1253
         busStop_16.setBus(coach_2);
         kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "bus");
         //operation F #1257
         kieSession.fireAllRules();
-        //operation U #1258
-        busStop_15.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "nextStop");
-        //operation U #1259
-        busStop_16.setPreviousBusOrStop(busStop_13);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "previousBusOrStop");
-        //operation U #1260
-        busStop_13.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1261
-        busStop_20.setPreviousBusOrStop(busStop_16);
-        kieSession.update(kieSession.getFactHandle(busStop_20), busStop_20, "previousBusOrStop");
-        //operation U #1262
-        busStop_13.setNextStop(busStop_16);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1263
-        busStop_16.setNextStop(busStop_20);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "nextStop");
         //operation U #1264
         busStop_16.setBus(shuttle_7);
         kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "bus");
         //operation F #1270
         kieSession.fireAllRules();
-        //operation U #1271
-        busStop_17.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "nextStop");
-        //operation U #1272
-        busStop_15.setPreviousBusOrStop(coach_2);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "previousBusOrStop");
-        //operation U #1273
-        coach_2.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1274
-        busStop_17.setPreviousBusOrStop(busStop_21);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "previousBusOrStop");
-        //operation U #1275
-        coach_2.setNextStop(busStop_15);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1276
-        busStop_21.setNextStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "nextStop");
         //operation U #1277
         busStop_17.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
         //operation F #1282
         kieSession.fireAllRules();
-        //operation U #1283
-        busStop_21.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "nextStop");
-        //operation U #1284
-        busStop_17.setPreviousBusOrStop(coach_2);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "previousBusOrStop");
-        //operation U #1285
-        coach_2.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1286
-        busStop_15.setPreviousBusOrStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "previousBusOrStop");
-        //operation U #1287
-        coach_2.setNextStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1288
-        busStop_17.setNextStop(busStop_15);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "nextStop");
         //operation U #1289
         busStop_17.setBus(coach_2);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
         //operation F #1291
         kieSession.fireAllRules();
-        //operation U #1292
-        busStop_17.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "nextStop");
-        //operation U #1293
-        busStop_15.setPreviousBusOrStop(coach_2);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "previousBusOrStop");
-        //operation U #1294
-        coach_2.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1295
-        busStop_17.setPreviousBusOrStop(busStop_21);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "previousBusOrStop");
-        //operation U #1296
-        coach_2.setNextStop(busStop_15);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1297
-        busStop_21.setNextStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "nextStop");
         //operation U #1298
         busStop_17.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
