@@ -1,7 +1,6 @@
 package org.optaplanner.drools.reproducer;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
@@ -12,13 +11,8 @@ import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;
 
 public class DroolsReproducerTest {
 
-    KieSession kieSession;
-    private final Coach coach_2 = new Coach();
-    private final Shuttle shuttle_8 = new Shuttle();
-    private final BusStop busStop_17 = new BusStop();
-
-    @Before
-    public void setUp() {
+    @Test
+    public void test() {
         String drl = "package org.optaplanner.examples.coachshuttlegathering.solver;\n"
                 + "    dialect \"java\"\n"
                 + "\n"
@@ -40,23 +34,22 @@ public class DroolsReproducerTest {
                 + "    then\n"
                 + "end\n"
                 + "";
-        kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
+        KieSession kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
+        Coach coach = new Coach();
+        BusStop busStop = new BusStop();
+        Shuttle shuttle = new Shuttle();
 
-        busStop_17.setBus(coach_2);
+        busStop.setBus(coach);
 
-        kieSession.insert(shuttle_8);
-        kieSession.insert(busStop_17);
-    }
-
-    @Test
-    public void test() {
-        shuttle_8.setDestination(busStop_17);
-        kieSession.update(kieSession.getFactHandle(shuttle_8), shuttle_8, "destination");
+        kieSession.insert(shuttle);
+        kieSession.insert(busStop);
+        shuttle.setDestination(busStop);
+        kieSession.update(kieSession.getFactHandle(shuttle), shuttle, "destination");
         Assert.assertEquals(0, kieSession.fireAllRules());
-        busStop_17.setBus(null);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
+        busStop.setBus(null);
+        kieSession.update(kieSession.getFactHandle(busStop), busStop, "bus");
         Assert.assertEquals(0, kieSession.fireAllRules());
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transferShuttleList");
+        kieSession.update(kieSession.getFactHandle(busStop), busStop, "transferShuttleList");
         // This is the corrupted score, just to make sure the bug is reproducible
         Assert.assertEquals(1, kieSession.fireAllRules());
     }
