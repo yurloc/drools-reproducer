@@ -1,20 +1,16 @@
 package org.optaplanner.drools.reproducer;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.kie.api.KieServices;
-import org.kie.api.builder.KieFileSystem;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.utils.KieHelper;
 import org.optaplanner.core.api.score.holder.ScoreHolder;
 import org.optaplanner.core.impl.score.buildin.hardsoftlong.HardSoftLongScoreDefinition;
-import org.optaplanner.examples.coachshuttlegathering.domain.BusHub;
 import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;
 import org.optaplanner.examples.coachshuttlegathering.domain.Coach;
 import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;
@@ -26,28 +22,9 @@ public class DroolsReproducerTest {
     KieContainer kieContainer;
     KieSession kieSession;
     ScoreHolder scoreHolder = new HardSoftLongScoreDefinition().buildScoreHolder(true);
-    private final BusHub busHub_0 = new BusHub();
-    private final Coach coach_1 = new Coach();
     private final Coach coach_2 = new Coach();
-    private final Coach coach_3 = new Coach();
-    private final Shuttle shuttle_4 = new Shuttle();
-    private final Shuttle shuttle_5 = new Shuttle();
-    private final Shuttle shuttle_6 = new Shuttle();
-    private final Shuttle shuttle_7 = new Shuttle();
     private final Shuttle shuttle_8 = new Shuttle();
-    private final Shuttle shuttle_9 = new Shuttle();
-    private final BusStop busStop_10 = new BusStop();
-    private final BusStop busStop_11 = new BusStop();
-    private final BusStop busStop_12 = new BusStop();
-    private final BusStop busStop_13 = new BusStop();
-    private final BusStop busStop_14 = new BusStop();
-    private final BusStop busStop_15 = new BusStop();
-    private final BusStop busStop_16 = new BusStop();
     private final BusStop busStop_17 = new BusStop();
-    private final BusStop busStop_18 = new BusStop();
-    private final BusStop busStop_19 = new BusStop();
-    private final BusStop busStop_20 = new BusStop();
-    private final BusStop busStop_21 = new BusStop();
     private final RoadLocation roadLocation_22 = new RoadLocation();
     private final RoadLocation roadLocation_23 = new RoadLocation();
     private final RoadLocation roadLocation_24 = new RoadLocation();
@@ -114,79 +91,12 @@ public class DroolsReproducerTest {
         kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
         kieSession.setGlobal("scoreHolder", scoreHolder);
 
-        //H1
-        busHub_0.setLocation(roadLocation_32);
-        busHub_0.setName("H0");
-        //C1
-        coach_1.setDepartureLocation(roadLocation_26);
-        //C2
-        coach_2.setDepartureLocation(roadLocation_26);
-        //C3
-        coach_3.setDepartureLocation(roadLocation_33);
-        //S1
-        shuttle_4.setName("S4");
-        //S2
-        shuttle_5.setDepartureLocation(roadLocation_22);
-        shuttle_5.setName("S5");
-        //S3
-        shuttle_6.setDepartureLocation(roadLocation_41);
-        shuttle_6.setName("S6");
-        //S4
-        shuttle_7.setDepartureLocation(roadLocation_40);
-        shuttle_7.setName("S7");
         //S5
         shuttle_8.setName("S8");
-        //S6
-        shuttle_9.setDepartureLocation(roadLocation_39);
-        shuttle_9.setName("S9");
-        //B0
-        busStop_10.setBus(coach_2);
-        busStop_10.setLocation(roadLocation_29);
-        busStop_10.setName("B10");
-        //B1
-        busStop_11.setBus(coach_1);
-        busStop_11.setLocation(roadLocation_27);
-        busStop_11.setName("B11");
-        //B2
-        busStop_12.setBus(coach_3);
-        busStop_12.setLocation(roadLocation_30);
-        busStop_12.setName("B12");
-        //B3
-        busStop_13.setBus(shuttle_7);
-        busStop_13.setLocation(roadLocation_34);
-        busStop_13.setName("B13");
-        //B4
-        busStop_14.setBus(coach_1);
-        busStop_14.setLocation(roadLocation_24);
-        busStop_14.setName("B14");
-        //B5
-        busStop_15.setBus(coach_3);
-        busStop_15.setLocation(roadLocation_31);
-        busStop_15.setName("B15");
-        //B6
-        busStop_16.setBus(shuttle_7);
-        busStop_16.setLocation(roadLocation_35);
-        busStop_16.setName("B16");
         //B7
         busStop_17.setBus(coach_2);
         busStop_17.setLocation(roadLocation_28);
         busStop_17.setName("B17");
-        //B8
-        busStop_18.setBus(shuttle_6);
-        busStop_18.setLocation(roadLocation_38);
-        busStop_18.setName("B18");
-        //B9
-        busStop_19.setBus(coach_1);
-        busStop_19.setLocation(roadLocation_25);
-        busStop_19.setName("B19");
-        //B10
-        busStop_20.setBus(shuttle_7);
-        busStop_20.setLocation(roadLocation_36);
-        busStop_20.setName("B20");
-        //B11
-        busStop_21.setBus(shuttle_7);
-        busStop_21.setLocation(roadLocation_37);
-        busStop_21.setName("B21");
         //RoadLocation-0
         HashMap<RoadLocation, RoadLocationArc> roadLocation_22_travelDistanceMap = new HashMap<RoadLocation, RoadLocationArc>();
         //RoadLocation-null => Road arc [coach: 0m/0s, shuttle: 0m/0s]
@@ -724,48 +634,10 @@ public class DroolsReproducerTest {
         roadLocation_41.setTravelDistanceMap(roadLocation_41_travelDistanceMap);
         roadLocation_41.setId(41L);
 
-        //operation I #0
-        kieSession.insert(busHub_0);
-        //operation I #1
-        kieSession.insert(coach_1);
-        //operation I #2
-        kieSession.insert(coach_2);
-        //operation I #3
-        kieSession.insert(coach_3);
-        //operation I #5
-        kieSession.insert(shuttle_5);
-        //operation I #6
-        kieSession.insert(shuttle_6);
-        //operation I #7
-        kieSession.insert(shuttle_7);
         //operation I #8
         kieSession.insert(shuttle_8);
-        //operation I #9
-        kieSession.insert(shuttle_9);
-        //operation I #10
-        kieSession.insert(busStop_10);
-        //operation I #11
-        kieSession.insert(busStop_11);
-        //operation I #12
-        kieSession.insert(busStop_12);
-        //operation I #13
-        kieSession.insert(busStop_13);
-        //operation I #14
-        kieSession.insert(busStop_14);
-        //operation I #15
-        kieSession.insert(busStop_15);
-        //operation I #16
-        kieSession.insert(busStop_16);
         //operation I #17
         kieSession.insert(busStop_17);
-        //operation I #18
-        kieSession.insert(busStop_18);
-        //operation I #19
-        kieSession.insert(busStop_19);
-        //operation I #20
-        kieSession.insert(busStop_20);
-        //operation I #21
-        kieSession.insert(busStop_21);
     }
 
     @Test
