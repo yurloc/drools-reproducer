@@ -1652,16 +1652,8 @@ public class DroolsReproducerTest {
         //operation F #1303
         kieSession.fireAllRules();
         Assert.assertEquals("0hard/0soft", scoreHolder.extractScore(0).toString());
-        //operation U #1335
-        kieSession.update(kieSession.getFactHandle(busHub_0), busHub_0, "transferShuttleList");
-        //operation U #1336
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transferShuttleList");
-        //operation U #1337
-        kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transferShuttleList");
         //operation U #1338
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transferShuttleList");
-        //operation U #1339
-        kieSession.update(kieSession.getFactHandle(busStop_12), busStop_12, "transferShuttleList");
         //operation F #1340
         kieSession.fireAllRules();
         // This is the corrupted score, just to make sure the bug is reproducible
