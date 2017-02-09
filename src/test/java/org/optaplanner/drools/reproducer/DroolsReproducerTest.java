@@ -53,9 +53,8 @@ public class DroolsReproducerTest {
                 + "\n"
                 + "rule \"distanceFromPrevious\"\n"
                 + "    when\n"
-                + "        BusStop(previousBusOrStop != null, $cost : distanceFromPreviousCost)\n"
+                + "        BusStop()\n"
                 + "    then\n"
-                + "        scoreHolder.addSoftConstraintMatch(kcontext, - $cost);\n"
                 + "end\n"
                 + "";
         kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
