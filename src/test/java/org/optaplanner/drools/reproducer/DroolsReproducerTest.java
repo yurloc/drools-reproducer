@@ -57,13 +57,6 @@ public class DroolsReproducerTest {
                 + "    then\n"
                 + "        scoreHolder.addSoftConstraintMatch(kcontext, - $cost);\n"
                 + "end\n"
-                + "\n"
-                + "rule \"distanceCoachDirectlyToDestination\"\n"
-                + "    when\n"
-                + "        Coach(destination != null, nextStop == null, $cost : distanceToDestinationCost)\n"
-                + "    then\n"
-                + "        scoreHolder.addSoftConstraintMatch(kcontext, - $cost);\n"
-                + "end\n"
                 + "";
         kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
         kieSession.setGlobal("scoreHolder", scoreHolder);
