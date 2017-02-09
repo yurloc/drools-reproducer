@@ -42,31 +42,21 @@ public class DroolsReproducerTest {
                 + "";
         kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
 
-        //S5
-        shuttle_8.setName("S8");
-        //B7
         busStop_17.setBus(coach_2);
 
-        //operation I #8
         kieSession.insert(shuttle_8);
-        //operation I #17
         kieSession.insert(busStop_17);
     }
 
     @Test
     public void test() {
-        //operation U #1005
         shuttle_8.setDestination(busStop_17);
         kieSession.update(kieSession.getFactHandle(shuttle_8), shuttle_8, "destination");
-        //operation F #1007
         Assert.assertEquals(0, kieSession.fireAllRules());
-        //operation U #1298
         busStop_17.setBus(null);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
-        //operation F #1303
         Assert.assertEquals(0, kieSession.fireAllRules());
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transferShuttleList");
-        //operation F #1340
         // This is the corrupted score, just to make sure the bug is reproducible
         Assert.assertEquals(1, kieSession.fireAllRules());
     }
