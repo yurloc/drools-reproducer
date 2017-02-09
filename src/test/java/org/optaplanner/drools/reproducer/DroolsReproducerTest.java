@@ -1,6 +1,5 @@
 package org.optaplanner.drools.reproducer;
 
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +15,7 @@ import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;
 
 public class DroolsReproducerTest {
 
-    KieContainer kieContainer;
     KieSession kieSession;
-    ScoreHolder scoreHolder = new HardSoftLongScoreDefinition().buildScoreHolder(true);
     private final Coach coach_2 = new Coach();
     private final Shuttle shuttle_8 = new Shuttle();
     private final BusStop busStop_17 = new BusStop();
@@ -27,8 +24,6 @@ public class DroolsReproducerTest {
     public void setUp() {
         String drl = "package org.optaplanner.examples.coachshuttlegathering.solver;\n"
                 + "    dialect \"java\"\n"
-                + "\n"
-                + "import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScoreHolder;\n"
                 + "\n"
                 + "import org.optaplanner.examples.coachshuttlegathering.domain.Bus;\n"
                 + "import org.optaplanner.examples.coachshuttlegathering.domain.BusHub;\n"
@@ -41,24 +36,21 @@ public class DroolsReproducerTest {
                 + "import org.optaplanner.examples.coachshuttlegathering.domain.location.RoadLocation;\n"
                 + "import org.optaplanner.examples.coachshuttlegathering.domain.location.RoadLocationArc;\n"
                 + "\n"
-                + "global HardSoftLongScoreHolder scoreHolder;\n"
-                + "\n"
                 + "rule \"shuttleDestinationIsCoachOrHub\"\n"
                 + "    when\n"
                 + "        $destination : StopOrHub(visitedByCoach == false)\n"
                 + "        Shuttle(destination == $destination)\n"
                 + "    then\n"
-                + "        scoreHolder.addHardConstraintMatch(kcontext, - 1000000000L);\n"
                 + "end\n"
                 + "\n"
                 + "rule \"distanceFromPrevious\"\n"
+                + "    enabled false"
                 + "    when\n"
                 + "        BusStop()\n"
                 + "    then\n"
                 + "end\n"
                 + "";
         kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
-        kieSession.setGlobal("scoreHolder", scoreHolder);
 
         //S5
         shuttle_8.setName("S8");
@@ -77,19 +69,15 @@ public class DroolsReproducerTest {
         shuttle_8.setDestination(busStop_17);
         kieSession.update(kieSession.getFactHandle(shuttle_8), shuttle_8, "destination");
         //operation F #1007
-        kieSession.fireAllRules();
-        Assert.assertEquals("0hard/0soft", scoreHolder.extractScore(0).toString());
+        Assert.assertEquals(0, kieSession.fireAllRules());
         //operation U #1298
         busStop_17.setBus(null);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
         //operation F #1303
-        kieSession.fireAllRules();
-        Assert.assertEquals("0hard/0soft", scoreHolder.extractScore(0).toString());
-        //operation U #1338
+        Assert.assertEquals(0, kieSession.fireAllRules());
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transferShuttleList");
         //operation F #1340
-        kieSession.fireAllRules();
         // This is the corrupted score, just to make sure the bug is reproducible
-        Assert.assertEquals("-1000000000hard/0soft", scoreHolder.extractScore(0).toString());
+        Assert.assertEquals(1, kieSession.fireAllRules());
     }
 }
