@@ -907,33 +907,6 @@ public class DroolsReproducerTest {
         //operation U #1050
         busStop_19.setBus(shuttle_9);
         kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "bus");
-        //operation U #1051
-        busStop_19.setTransportTimeToHub(1080);
-        kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transportTimeToHub");
-        //operation U #1052
-        busStop_20.setTransportTimeToHub(null);
-        kieSession.update(kieSession.getFactHandle(busStop_20), busStop_20, "transportTimeToHub");
-        //operation U #1053
-        busStop_16.setTransportTimeToHub(null);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "transportTimeToHub");
-        //operation U #1054
-        busStop_13.setTransportTimeToHub(null);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
-        //operation U #1055
-        busStop_14.setTransportTimeToHub(1200);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "transportTimeToHub");
-        //operation U #1056
-        busStop_11.setTransportTimeToHub(1380);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1057
-        busStop_21.setTransportTimeToHub(null);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "transportTimeToHub");
-        //operation U #1058
-        busStop_10.setTransportTimeToHub(null);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1059
-        busStop_18.setTransportTimeToHub(null);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
         //operation F #1060
         kieSession.fireAllRules();
         //operation U #1061
@@ -954,60 +927,6 @@ public class DroolsReproducerTest {
         //operation U #1066
         busStop_19.setBus(coach_1);
         kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "bus");
-        //operation U #1067
-        busStop_11.setTransportTimeToHub(1470);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1068
-        busStop_21.setTransportTimeToHub(2010);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "transportTimeToHub");
-        //operation U #1069
-        busStop_10.setTransportTimeToHub(2250);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1070
-        busStop_18.setTransportTimeToHub(2610);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1071
-        busStop_14.setTransportTimeToHub(1260);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "transportTimeToHub");
-        //operation U #1072
-        busStop_11.setTransportTimeToHub(1530);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1073
-        busStop_21.setTransportTimeToHub(2070);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "transportTimeToHub");
-        //operation U #1074
-        busStop_10.setTransportTimeToHub(2310);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1075
-        busStop_18.setTransportTimeToHub(2670);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1076
-        busStop_19.setTransportTimeToHub(540);
-        kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transportTimeToHub");
-        //operation U #1077
-        busStop_20.setTransportTimeToHub(780);
-        kieSession.update(kieSession.getFactHandle(busStop_20), busStop_20, "transportTimeToHub");
-        //operation U #1078
-        busStop_16.setTransportTimeToHub(900);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "transportTimeToHub");
-        //operation U #1079
-        busStop_13.setTransportTimeToHub(960);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
-        //operation U #1080
-        busStop_14.setTransportTimeToHub(720);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "transportTimeToHub");
-        //operation U #1081
-        busStop_11.setTransportTimeToHub(990);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1082
-        busStop_21.setTransportTimeToHub(1530);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "transportTimeToHub");
-        //operation U #1083
-        busStop_10.setTransportTimeToHub(1770);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1084
-        busStop_18.setTransportTimeToHub(2130);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
         //operation F #1085
         kieSession.fireAllRules();
         //operation U #1086
@@ -1052,18 +971,6 @@ public class DroolsReproducerTest {
         //operation U #1099
         busStop_17.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
-        //operation U #1100
-        busStop_18.setTransportTimeToHub(960);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1101
-        busStop_17.setTransportTimeToHub(1890);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
-        //operation U #1102
-        busStop_18.setTransportTimeToHub(2130);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1103
-        busStop_10.setTransportTimeToHub(900);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
         //operation F #1104
         kieSession.fireAllRules();
         //operation U #1105
@@ -1108,18 +1015,6 @@ public class DroolsReproducerTest {
         //operation U #1118
         busStop_10.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "bus");
-        //operation U #1119
-        busStop_18.setTransportTimeToHub(1260);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1120
-        busStop_10.setTransportTimeToHub(1770);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1121
-        busStop_18.setTransportTimeToHub(2130);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1122
-        busStop_17.setTransportTimeToHub(720);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
         //operation F #1123
         kieSession.fireAllRules();
         //operation U #1124
@@ -1152,33 +1047,6 @@ public class DroolsReproducerTest {
         //operation U #1133
         busStop_15.setBus(shuttle_7);
         kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "bus");
-        //operation U #1134
-        busStop_13.setTransportTimeToHub(1020);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
-        //operation U #1135
-        busStop_16.setTransportTimeToHub(960);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "transportTimeToHub");
-        //operation U #1136
-        busStop_20.setTransportTimeToHub(360);
-        kieSession.update(kieSession.getFactHandle(busStop_20), busStop_20, "transportTimeToHub");
-        //operation U #1137
-        busStop_16.setTransportTimeToHub(540);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "transportTimeToHub");
-        //operation U #1138
-        busStop_17.setTransportTimeToHub(660);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
-        //operation U #1139
-        busStop_13.setTransportTimeToHub(960);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
-        //operation U #1140
-        busStop_15.setTransportTimeToHub(780);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "transportTimeToHub");
-        //operation U #1141
-        busStop_17.setTransportTimeToHub(900);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
-        //operation U #1142
-        busStop_13.setTransportTimeToHub(1200);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
         //operation F #1143
         kieSession.fireAllRules();
         //operation U #1144
@@ -1211,33 +1079,6 @@ public class DroolsReproducerTest {
         //operation U #1153
         busStop_15.setBus(coach_2);
         kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "bus");
-        //operation U #1154
-        busStop_13.setTransportTimeToHub(600);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
-        //operation U #1155
-        busStop_16.setTransportTimeToHub(480);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "transportTimeToHub");
-        //operation U #1156
-        busStop_13.setTransportTimeToHub(540);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
-        //operation U #1157
-        busStop_20.setTransportTimeToHub(780);
-        kieSession.update(kieSession.getFactHandle(busStop_20), busStop_20, "transportTimeToHub");
-        //operation U #1158
-        busStop_16.setTransportTimeToHub(900);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "transportTimeToHub");
-        //operation U #1159
-        busStop_13.setTransportTimeToHub(960);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
-        //operation U #1160
-        busStop_17.setTransportTimeToHub(960);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
-        //operation U #1161
-        busStop_15.setTransportTimeToHub(540);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "transportTimeToHub");
-        //operation U #1162
-        busStop_17.setTransportTimeToHub(720);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
         //operation F #1163
         kieSession.fireAllRules();
         //operation U #1164
@@ -1261,9 +1102,6 @@ public class DroolsReproducerTest {
         //operation U #1170
         busStop_18.setBus(shuttle_5);
         kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "bus");
-        //operation U #1171
-        busStop_18.setTransportTimeToHub(360);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
         //operation F #1172
         kieSession.fireAllRules();
         //operation U #1173
@@ -1287,9 +1125,6 @@ public class DroolsReproducerTest {
         //operation U #1179
         busStop_18.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "bus");
-        //operation U #1180
-        busStop_18.setTransportTimeToHub(2130);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
         //operation F #1181
         kieSession.fireAllRules();
         //operation U #1182
@@ -1325,75 +1160,6 @@ public class DroolsReproducerTest {
         //operation U #1192
         busStop_19.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "bus");
-        //operation U #1193
-        busStop_19.setTransportTimeToHub(1290);
-        kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transportTimeToHub");
-        //operation U #1194
-        busStop_20.setTransportTimeToHub(null);
-        kieSession.update(kieSession.getFactHandle(busStop_20), busStop_20, "transportTimeToHub");
-        //operation U #1195
-        busStop_16.setTransportTimeToHub(null);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "transportTimeToHub");
-        //operation U #1196
-        busStop_13.setTransportTimeToHub(null);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
-        //operation U #1197
-        busStop_14.setTransportTimeToHub(1410);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "transportTimeToHub");
-        //operation U #1198
-        busStop_11.setTransportTimeToHub(2760);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1199
-        busStop_19.setTransportTimeToHub(3060);
-        kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transportTimeToHub");
-        //operation U #1200
-        busStop_14.setTransportTimeToHub(3180);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "transportTimeToHub");
-        //operation U #1201
-        busStop_18.setTransportTimeToHub(2310);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1202
-        busStop_11.setTransportTimeToHub(2940);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1203
-        busStop_19.setTransportTimeToHub(3240);
-        kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transportTimeToHub");
-        //operation U #1204
-        busStop_14.setTransportTimeToHub(3360);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "transportTimeToHub");
-        //operation U #1205
-        busStop_10.setTransportTimeToHub(1890);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1206
-        busStop_18.setTransportTimeToHub(2430);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1207
-        busStop_11.setTransportTimeToHub(3060);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1208
-        busStop_19.setTransportTimeToHub(3360);
-        kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transportTimeToHub");
-        //operation U #1209
-        busStop_14.setTransportTimeToHub(3480);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "transportTimeToHub");
-        //operation U #1210
-        busStop_21.setTransportTimeToHub(180);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "transportTimeToHub");
-        //operation U #1211
-        busStop_10.setTransportTimeToHub(540);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1212
-        busStop_18.setTransportTimeToHub(1080);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1213
-        busStop_11.setTransportTimeToHub(1710);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1214
-        busStop_19.setTransportTimeToHub(2010);
-        kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transportTimeToHub");
-        //operation U #1215
-        busStop_14.setTransportTimeToHub(2130);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "transportTimeToHub");
         //operation F #1216
         kieSession.fireAllRules();
         //operation U #1217
@@ -1429,60 +1195,6 @@ public class DroolsReproducerTest {
         //operation U #1227
         busStop_19.setBus(coach_1);
         kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "bus");
-        //operation U #1228
-        busStop_11.setTransportTimeToHub(2400);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1229
-        busStop_21.setTransportTimeToHub(2940);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "transportTimeToHub");
-        //operation U #1230
-        busStop_10.setTransportTimeToHub(3180);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1231
-        busStop_18.setTransportTimeToHub(3540);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1232
-        busStop_14.setTransportTimeToHub(2190);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "transportTimeToHub");
-        //operation U #1233
-        busStop_11.setTransportTimeToHub(2460);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1234
-        busStop_21.setTransportTimeToHub(3000);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "transportTimeToHub");
-        //operation U #1235
-        busStop_10.setTransportTimeToHub(3240);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1236
-        busStop_18.setTransportTimeToHub(3600);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
-        //operation U #1237
-        busStop_19.setTransportTimeToHub(540);
-        kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transportTimeToHub");
-        //operation U #1238
-        busStop_20.setTransportTimeToHub(780);
-        kieSession.update(kieSession.getFactHandle(busStop_20), busStop_20, "transportTimeToHub");
-        //operation U #1239
-        busStop_16.setTransportTimeToHub(900);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "transportTimeToHub");
-        //operation U #1240
-        busStop_13.setTransportTimeToHub(960);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
-        //operation U #1241
-        busStop_14.setTransportTimeToHub(720);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "transportTimeToHub");
-        //operation U #1242
-        busStop_11.setTransportTimeToHub(990);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transportTimeToHub");
-        //operation U #1243
-        busStop_21.setTransportTimeToHub(1530);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "transportTimeToHub");
-        //operation U #1244
-        busStop_10.setTransportTimeToHub(1770);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1245
-        busStop_18.setTransportTimeToHub(2130);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
         //operation F #1246
         kieSession.fireAllRules();
         //operation U #1247
@@ -1506,15 +1218,6 @@ public class DroolsReproducerTest {
         //operation U #1253
         busStop_16.setBus(coach_2);
         kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "bus");
-        //operation U #1254
-        busStop_16.setTransportTimeToHub(540);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "transportTimeToHub");
-        //operation U #1255
-        busStop_15.setTransportTimeToHub(720);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "transportTimeToHub");
-        //operation U #1256
-        busStop_17.setTransportTimeToHub(900);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
         //operation F #1257
         kieSession.fireAllRules();
         //operation U #1258
@@ -1538,21 +1241,6 @@ public class DroolsReproducerTest {
         //operation U #1264
         busStop_16.setBus(shuttle_7);
         kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "bus");
-        //operation U #1265
-        busStop_15.setTransportTimeToHub(540);
-        kieSession.update(kieSession.getFactHandle(busStop_15), busStop_15, "transportTimeToHub");
-        //operation U #1266
-        busStop_17.setTransportTimeToHub(720);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
-        //operation U #1267
-        busStop_13.setTransportTimeToHub(600);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
-        //operation U #1268
-        busStop_16.setTransportTimeToHub(900);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "transportTimeToHub");
-        //operation U #1269
-        busStop_13.setTransportTimeToHub(960);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "transportTimeToHub");
         //operation F #1270
         kieSession.fireAllRules();
         //operation U #1271
@@ -1576,18 +1264,6 @@ public class DroolsReproducerTest {
         //operation U #1277
         busStop_17.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
-        //operation U #1278
-        busStop_17.setTransportTimeToHub(1170);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
-        //operation U #1279
-        busStop_21.setTransportTimeToHub(1530);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "transportTimeToHub");
-        //operation U #1280
-        busStop_10.setTransportTimeToHub(1770);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1281
-        busStop_18.setTransportTimeToHub(2130);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
         //operation F #1282
         kieSession.fireAllRules();
         //operation U #1283
@@ -1611,9 +1287,6 @@ public class DroolsReproducerTest {
         //operation U #1289
         busStop_17.setBus(coach_2);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
-        //operation U #1290
-        busStop_17.setTransportTimeToHub(720);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
         //operation F #1291
         kieSession.fireAllRules();
         //operation U #1292
@@ -1637,18 +1310,6 @@ public class DroolsReproducerTest {
         //operation U #1298
         busStop_17.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
-        //operation U #1299
-        busStop_17.setTransportTimeToHub(1170);
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transportTimeToHub");
-        //operation U #1300
-        busStop_21.setTransportTimeToHub(1530);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "transportTimeToHub");
-        //operation U #1301
-        busStop_10.setTransportTimeToHub(1770);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "transportTimeToHub");
-        //operation U #1302
-        busStop_18.setTransportTimeToHub(2130);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "transportTimeToHub");
         //operation F #1303
         kieSession.fireAllRules();
         Assert.assertEquals("0hard/0soft", scoreHolder.extractScore(0).toString());
