@@ -4,11 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.io.ResourceType;
-import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.utils.KieHelper;
-import org.optaplanner.core.api.score.holder.ScoreHolder;
-import org.optaplanner.core.impl.score.buildin.hardsoftlong.HardSoftLongScoreDefinition;
 import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;
 import org.optaplanner.examples.coachshuttlegathering.domain.Coach;
 import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;
@@ -25,16 +22,9 @@ public class DroolsReproducerTest {
         String drl = "package org.optaplanner.examples.coachshuttlegathering.solver;\n"
                 + "    dialect \"java\"\n"
                 + "\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.Bus;\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.BusHub;\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.BusOrStop;\n"
                 + "import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.Coach;\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.CoachShuttleGatheringSolution;\n"
                 + "import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;\n"
                 + "import org.optaplanner.examples.coachshuttlegathering.domain.StopOrHub;\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.location.RoadLocation;\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.location.RoadLocationArc;\n"
                 + "\n"
                 + "rule \"shuttleDestinationIsCoachOrHub\"\n"
                 + "    when\n"
