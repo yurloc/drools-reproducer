@@ -777,7 +777,7 @@ public class DroolsReproducerTest {
         kieSession.fireAllRules();
         Assert.assertEquals("0hard/0soft", scoreHolder.extractScore(0).toString());
         //operation U #1298
-        busStop_17.setBus(shuttle_6);
+        busStop_17.setBus(null);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
         //operation F #1303
         kieSession.fireAllRules();
