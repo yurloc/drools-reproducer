@@ -1652,113 +1652,15 @@ public class DroolsReproducerTest {
         //operation F #1303
         kieSession.fireAllRules();
         Assert.assertEquals("0hard/0soft", scoreHolder.extractScore(0).toString());
-        //operation U #1304
-        busHub_0.setTransferShuttleList(Arrays.<Shuttle>asList(shuttle_5));
-        kieSession.update(kieSession.getFactHandle(busHub_0), busHub_0, "transferShuttleList");
-        //operation U #1305
-        busHub_0.setTransferShuttleList(Arrays.<Shuttle>asList());
-        kieSession.update(kieSession.getFactHandle(busHub_0), busHub_0, "transferShuttleList");
-        //operation U #1306
-        busStop_11.setTransferShuttleList(Arrays.<Shuttle>asList());
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transferShuttleList");
-        //operation U #1307
-        busStop_19.setTransferShuttleList(Arrays.<Shuttle>asList());
-        kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transferShuttleList");
-        //operation U #1308
-        busStop_17.setTransferShuttleList(Arrays.<Shuttle>asList());
-        kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transferShuttleList");
-        //operation U #1309
-        busStop_12.setTransferShuttleList(Arrays.<Shuttle>asList());
-        kieSession.update(kieSession.getFactHandle(busStop_12), busStop_12, "transferShuttleList");
-        //operation U #1310
-        busStop_18.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "nextStop");
-        //operation U #1311
-        coach_1.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_1), coach_1, "nextStop");
-        //operation U #1312
-        coach_3.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_3), coach_3, "nextStop");
-        //operation U #1313
-        shuttle_7.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(shuttle_7), shuttle_7, "nextStop");
-        //operation U #1314
-        busStop_11.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "nextStop");
-        //operation U #1315
-        coach_2.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1316
-        busStop_13.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1317
-        busStop_21.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "nextStop");
-        //operation U #1318
-        shuttle_6.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1319
-        busStop_14.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "nextStop");
-        //operation U #1320
-        busStop_16.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "nextStop");
-        //operation U #1321
-        busStop_10.setNextStop(null);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "nextStop");
-        //operation U #1322
-        busStop_18.setNextStop(busStop_10);
-        kieSession.update(kieSession.getFactHandle(busStop_18), busStop_18, "nextStop");
-        //operation U #1323
-        coach_1.setNextStop(busStop_11);
-        kieSession.update(kieSession.getFactHandle(coach_1), coach_1, "nextStop");
-        //operation U #1324
-        coach_3.setNextStop(busStop_12);
-        kieSession.update(kieSession.getFactHandle(coach_3), coach_3, "nextStop");
-        //operation U #1325
-        shuttle_7.setNextStop(busStop_13);
-        kieSession.update(kieSession.getFactHandle(shuttle_7), shuttle_7, "nextStop");
-        //operation U #1326
-        busStop_11.setNextStop(busStop_14);
-        kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "nextStop");
-        //operation U #1327
-        coach_2.setNextStop(busStop_15);
-        kieSession.update(kieSession.getFactHandle(coach_2), coach_2, "nextStop");
-        //operation U #1328
-        busStop_13.setNextStop(busStop_16);
-        kieSession.update(kieSession.getFactHandle(busStop_13), busStop_13, "nextStop");
-        //operation U #1329
-        busStop_21.setNextStop(busStop_17);
-        kieSession.update(kieSession.getFactHandle(busStop_21), busStop_21, "nextStop");
-        //operation U #1330
-        shuttle_6.setNextStop(busStop_18);
-        kieSession.update(kieSession.getFactHandle(shuttle_6), shuttle_6, "nextStop");
-        //operation U #1331
-        busStop_14.setNextStop(busStop_19);
-        kieSession.update(kieSession.getFactHandle(busStop_14), busStop_14, "nextStop");
-        //operation U #1332
-        busStop_16.setNextStop(busStop_20);
-        kieSession.update(kieSession.getFactHandle(busStop_16), busStop_16, "nextStop");
-        //operation U #1333
-        busStop_10.setNextStop(busStop_21);
-        kieSession.update(kieSession.getFactHandle(busStop_10), busStop_10, "nextStop");
-        //operation U #1334
-        busHub_0.setTransferShuttleList(Arrays.<Shuttle>asList(shuttle_4));
-        kieSession.update(kieSession.getFactHandle(busHub_0), busHub_0, "transferShuttleList");
         //operation U #1335
-        busHub_0.setTransferShuttleList(Arrays.<Shuttle>asList(shuttle_4, shuttle_5));
         kieSession.update(kieSession.getFactHandle(busHub_0), busHub_0, "transferShuttleList");
         //operation U #1336
-        busStop_11.setTransferShuttleList(Arrays.<Shuttle>asList(shuttle_6));
         kieSession.update(kieSession.getFactHandle(busStop_11), busStop_11, "transferShuttleList");
         //operation U #1337
-        busStop_19.setTransferShuttleList(Arrays.<Shuttle>asList(shuttle_7));
         kieSession.update(kieSession.getFactHandle(busStop_19), busStop_19, "transferShuttleList");
         //operation U #1338
-        busStop_17.setTransferShuttleList(Arrays.<Shuttle>asList(shuttle_8));
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "transferShuttleList");
         //operation U #1339
-        busStop_12.setTransferShuttleList(Arrays.<Shuttle>asList(shuttle_9));
         kieSession.update(kieSession.getFactHandle(busStop_12), busStop_12, "transferShuttleList");
         //operation F #1340
         kieSession.fireAllRules();
