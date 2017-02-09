@@ -773,9 +773,6 @@ public class DroolsReproducerTest {
         //operation U #1005
         shuttle_8.setDestination(busStop_17);
         kieSession.update(kieSession.getFactHandle(shuttle_8), shuttle_8, "destination");
-        //operation F #1007
-        kieSession.fireAllRules();
-        Assert.assertEquals("0hard/0soft", scoreHolder.extractScore(0).toString());
         //operation U #1298
         busStop_17.setBus(shuttle_6);
         kieSession.update(kieSession.getFactHandle(busStop_17), busStop_17, "bus");
