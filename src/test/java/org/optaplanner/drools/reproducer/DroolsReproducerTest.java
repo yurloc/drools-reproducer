@@ -73,13 +73,6 @@ public class DroolsReproducerTest {
                 + "        Shuttle(destination == $destination)\n"
                 + "    then\n"
                 + "end\n"
-                + "\n"
-                + "rule \"distanceFromPrevious\"\n"
-                + "    enabled false"
-                + "    when\n"
-                + "        BusStop()\n"
-                + "    then\n"
-                + "end\n"
                 + "";
         KieSession kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
         BusStop busStop = new BusStop();
