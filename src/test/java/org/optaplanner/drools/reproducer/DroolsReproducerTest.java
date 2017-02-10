@@ -1,15 +1,56 @@
 package org.optaplanner.drools.reproducer;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.utils.KieHelper;
-import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;
-import org.optaplanner.examples.coachshuttlegathering.domain.Coach;
 import org.optaplanner.examples.coachshuttlegathering.domain.StopOrHub;
+import org.optaplanner.examples.coachshuttlegathering.domain.location.RoadLocation;
 
 public class DroolsReproducerTest {
+
+    public static class BusStop implements StopOrHub {
+
+        private boolean visitedByCoach;
+
+        @Override
+        public RoadLocation getLocation() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public String getName() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public List<org.optaplanner.examples.coachshuttlegathering.domain.Shuttle> getTransferShuttleList() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setTransferShuttleList(List<org.optaplanner.examples.coachshuttlegathering.domain.Shuttle> transferShuttleList) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public Integer getTransportTimeToHub() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public boolean isVisitedByCoach() {
+            return visitedByCoach;
+        }
+
+        public void setVisitedByCoach(boolean visitedByCoach) {
+            this.visitedByCoach = visitedByCoach;
+        }
+
+    }
 
     public static class Shuttle {
 
@@ -30,7 +71,7 @@ public class DroolsReproducerTest {
         String drl = "package org.optaplanner.examples.coachshuttlegathering.solver;\n"
                 + "    dialect \"java\"\n"
                 + "\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;\n"
+                + "import " + DroolsReproducerTest.BusStop.class.getCanonicalName() + ";\n"
                 + "import " + DroolsReproducerTest.Shuttle.class.getCanonicalName() + ";\n"
                 + "import org.optaplanner.examples.coachshuttlegathering.domain.StopOrHub;\n"
                 + "\n"
@@ -49,22 +90,21 @@ public class DroolsReproducerTest {
                 + "end\n"
                 + "";
         KieSession kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
-        Coach coach = new Coach();
         BusStop busStop = new BusStop();
         Shuttle shuttle = new Shuttle();
 
-        busStop.setBus(coach);
+        busStop.setVisitedByCoach(true);
 
         kieSession.insert(shuttle);
         kieSession.insert(busStop);
         shuttle.setDestination(busStop);
         kieSession.update(kieSession.getFactHandle(shuttle), shuttle, "destination");
         Assert.assertEquals(0, kieSession.fireAllRules());
-        busStop.setBus(null);
+        busStop.setVisitedByCoach(false);
         // LHS is satisfied, rule should fire but it doesn't
         Assert.assertEquals(busStop, shuttle.getDestination());
         Assert.assertFalse(busStop.isVisitedByCoach());
-        kieSession.update(kieSession.getFactHandle(busStop), busStop, "bus");
+        kieSession.update(kieSession.getFactHandle(busStop), busStop, "visitedByCoach");
         Assert.assertEquals(0, kieSession.fireAllRules());
         kieSession.update(kieSession.getFactHandle(busStop), busStop, "transferShuttleList");
         // This is the corrupted score, just to make sure the bug is reproducible
