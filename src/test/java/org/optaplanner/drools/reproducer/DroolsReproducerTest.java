@@ -1,11 +1,10 @@
 package org.optaplanner.drools.reproducer;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
 import org.kie.internal.utils.KieHelper;
 
 public class DroolsReproducerTest {
@@ -38,8 +37,9 @@ public class DroolsReproducerTest {
             return visitedByCoach;
         }
 
-        public void setVisitedByCoach(boolean visitedByCoach) {
+        public BusStop setVisitedByCoach(boolean visitedByCoach) {
             this.visitedByCoach = visitedByCoach;
+            return this;
         }
 
     }
@@ -52,47 +52,45 @@ public class DroolsReproducerTest {
             return destination;
         }
 
-        public void setDestination(StopOrHub destination) {
+        public Shuttle setDestination(StopOrHub destination) {
             this.destination = destination;
+            return this;
         }
 
     }
 
     @Test
     public void test() {
-        String drl = "package org.optaplanner.examples.coachshuttlegathering.solver;\n"
-                + "    dialect \"java\"\n"
-                + "\n"
+        String drl = "package org.test;\n"
                 + "import " + DroolsReproducerTest.BusStop.class.getCanonicalName() + ";\n"
                 + "import " + DroolsReproducerTest.Shuttle.class.getCanonicalName() + ";\n"
                 + "import " + DroolsReproducerTest.StopOrHub.class.getCanonicalName() + ";\n"
-                + "\n"
-                + "rule \"shuttleDestinationIsCoachOrHub\"\n"
+                + "rule shuttleDestinationIsCoachOrHub\n"
                 + "    when\n"
                 + "        $destination : StopOrHub(visitedByCoach == false)\n"
                 + "        Shuttle(destination == $destination)\n"
                 + "    then\n"
-                + "end\n"
-                + "";
+                + "end";
         KieSession kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
+
         BusStop busStop = new BusStop();
         Shuttle shuttle = new Shuttle();
-
         busStop.setVisitedByCoach(true);
 
-        kieSession.insert(shuttle);
-        kieSession.insert(busStop);
-        shuttle.setDestination(busStop);
-        kieSession.update(kieSession.getFactHandle(shuttle), shuttle, "destination");
+        FactHandle fhShuttle = kieSession.insert(shuttle);
+        FactHandle fhBusStop = kieSession.insert(busStop);
+
+        kieSession.update(fhShuttle, shuttle.setDestination(busStop), "destination");
         Assert.assertEquals(0, kieSession.fireAllRules());
-        busStop.setVisitedByCoach(false);
-        // LHS is satisfied, rule should fire but it doesn't
+
+        kieSession.update(fhBusStop, busStop.setVisitedByCoach(false), "visitedByCoach");
+        // LHS is now satisfied, the rule should fire but it doesn't
         Assert.assertEquals(busStop, shuttle.getDestination());
         Assert.assertFalse(busStop.isVisitedByCoach());
-        kieSession.update(kieSession.getFactHandle(busStop), busStop, "visitedByCoach");
         Assert.assertEquals(0, kieSession.fireAllRules());
-        kieSession.update(kieSession.getFactHandle(busStop), busStop, "unrelatedProperty");
-        // This is the corrupted score, just to make sure the bug is reproducible
+
+        // after this update (without any real fact modification) the rule will fire as expected
+        kieSession.update(fhBusStop, busStop, "unrelatedProperty");
         Assert.assertEquals(1, kieSession.fireAllRules());
     }
 }
