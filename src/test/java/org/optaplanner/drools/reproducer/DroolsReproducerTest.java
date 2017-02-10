@@ -27,25 +27,11 @@ public class DroolsReproducerTest {
     public static interface StopOrHub {
 
         boolean isVisitedByCoach();
-
-        Object getUnrelatedProperty();
-
-        void setUnrelatedProperty(Object unrelatedProperty);
     }
 
     public static class BusStop implements StopOrHub {
 
         private boolean visitedByCoach;
-
-        @Override
-        public Object getUnrelatedProperty() {
-            throw new UnsupportedOperationException("The property is never read.");
-        }
-
-        @Override
-        public void setUnrelatedProperty(Object transferShuttleList) {
-            throw new UnsupportedOperationException("The property is never modified.");
-        }
 
         @Override
         public boolean isVisitedByCoach() {
@@ -95,9 +81,10 @@ public class DroolsReproducerTest {
         FactHandle fhShuttle = kieSession.insert(shuttle);
         FactHandle fhBusStop = kieSession.insert(busStop);
 
-        kieSession.update(fhShuttle, shuttle.setDestination(busStop), "destination");
+        kieSession.update(fhShuttle, shuttle.setDestination(busStop));
         Assert.assertEquals(0, kieSession.fireAllRules());
 
+        // removing the property name from this update will make the test pass
         kieSession.update(fhBusStop, busStop.setVisitedByCoach(false), "visitedByCoach");
         // LHS is now satisfied, the rule should fire but it doesn't
         Assert.assertEquals(busStop, shuttle.getDestination());
@@ -105,7 +92,7 @@ public class DroolsReproducerTest {
         Assert.assertEquals(1, kieSession.fireAllRules()); // change the expected value to 0 to get further
 
         // after this update (without any real fact modification) the rule will fire as expected
-        kieSession.update(fhBusStop, busStop, "unrelatedProperty");
+        kieSession.update(fhBusStop, busStop);
         Assert.assertEquals(1, kieSession.fireAllRules());
     }
 }
