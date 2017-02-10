@@ -87,7 +87,7 @@ public class DroolsReproducerTest {
         // LHS is now satisfied, the rule should fire but it doesn't
         Assert.assertEquals(busStop, shuttle.getDestination());
         Assert.assertFalse(busStop.isVisitedByCoach());
-        Assert.assertEquals(0, kieSession.fireAllRules());
+        Assert.assertEquals(1, kieSession.fireAllRules()); // change the expected value to 0 to get further
 
         // after this update (without any real fact modification) the rule will fire as expected
         kieSession.update(fhBusStop, busStop, "unrelatedProperty");
