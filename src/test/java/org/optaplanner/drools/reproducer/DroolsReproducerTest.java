@@ -7,37 +7,29 @@ import org.junit.Test;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.utils.KieHelper;
-import org.optaplanner.examples.coachshuttlegathering.domain.StopOrHub;
-import org.optaplanner.examples.coachshuttlegathering.domain.location.RoadLocation;
 
 public class DroolsReproducerTest {
+
+    public static interface StopOrHub {
+
+        boolean isVisitedByCoach();
+
+        List<Shuttle> getTransferShuttleList();
+
+        void setTransferShuttleList(List<Shuttle> transferShuttleList);
+    }
 
     public static class BusStop implements StopOrHub {
 
         private boolean visitedByCoach;
 
         @Override
-        public RoadLocation getLocation() {
+        public List<Shuttle> getTransferShuttleList() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public String getName() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public List<org.optaplanner.examples.coachshuttlegathering.domain.Shuttle> getTransferShuttleList() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void setTransferShuttleList(List<org.optaplanner.examples.coachshuttlegathering.domain.Shuttle> transferShuttleList) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public Integer getTransportTimeToHub() {
+        public void setTransferShuttleList(List<Shuttle> transferShuttleList) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
@@ -73,7 +65,7 @@ public class DroolsReproducerTest {
                 + "\n"
                 + "import " + DroolsReproducerTest.BusStop.class.getCanonicalName() + ";\n"
                 + "import " + DroolsReproducerTest.Shuttle.class.getCanonicalName() + ";\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.StopOrHub;\n"
+                + "import " + DroolsReproducerTest.StopOrHub.class.getCanonicalName() + ";\n"
                 + "\n"
                 + "rule \"shuttleDestinationIsCoachOrHub\"\n"
                 + "    when\n"
