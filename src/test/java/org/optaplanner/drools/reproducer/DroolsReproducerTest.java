@@ -7,9 +7,23 @@ import org.kie.api.runtime.KieSession;
 import org.kie.internal.utils.KieHelper;
 import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;
 import org.optaplanner.examples.coachshuttlegathering.domain.Coach;
-import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;
+import org.optaplanner.examples.coachshuttlegathering.domain.StopOrHub;
 
 public class DroolsReproducerTest {
+
+    public static class Shuttle {
+
+        private StopOrHub destination;
+
+        public StopOrHub getDestination() {
+            return destination;
+        }
+
+        public void setDestination(StopOrHub destination) {
+            this.destination = destination;
+        }
+
+    }
 
     @Test
     public void test() {
@@ -17,7 +31,7 @@ public class DroolsReproducerTest {
                 + "    dialect \"java\"\n"
                 + "\n"
                 + "import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;\n"
+                + "import " + DroolsReproducerTest.Shuttle.class.getCanonicalName() + ";\n"
                 + "import org.optaplanner.examples.coachshuttlegathering.domain.StopOrHub;\n"
                 + "\n"
                 + "rule \"shuttleDestinationIsCoachOrHub\"\n"
