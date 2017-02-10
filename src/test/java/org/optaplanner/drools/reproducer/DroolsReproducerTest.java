@@ -14,9 +14,9 @@ public class DroolsReproducerTest {
 
         boolean isVisitedByCoach();
 
-        List<Shuttle> getTransferShuttleList();
+        Object getUnrelatedProperty();
 
-        void setTransferShuttleList(List<Shuttle> transferShuttleList);
+        void setUnrelatedProperty(Object unrelatedProperty);
     }
 
     public static class BusStop implements StopOrHub {
@@ -24,13 +24,13 @@ public class DroolsReproducerTest {
         private boolean visitedByCoach;
 
         @Override
-        public List<Shuttle> getTransferShuttleList() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        public Object getUnrelatedProperty() {
+            throw new UnsupportedOperationException("The property is never read.");
         }
 
         @Override
-        public void setTransferShuttleList(List<Shuttle> transferShuttleList) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        public void setUnrelatedProperty(Object transferShuttleList) {
+            throw new UnsupportedOperationException("The property is never modified.");
         }
 
         @Override
@@ -91,7 +91,7 @@ public class DroolsReproducerTest {
         Assert.assertFalse(busStop.isVisitedByCoach());
         kieSession.update(kieSession.getFactHandle(busStop), busStop, "visitedByCoach");
         Assert.assertEquals(0, kieSession.fireAllRules());
-        kieSession.update(kieSession.getFactHandle(busStop), busStop, "transferShuttleList");
+        kieSession.update(kieSession.getFactHandle(busStop), busStop, "unrelatedProperty");
         // This is the corrupted score, just to make sure the bug is reproducible
         Assert.assertEquals(1, kieSession.fireAllRules());
     }
