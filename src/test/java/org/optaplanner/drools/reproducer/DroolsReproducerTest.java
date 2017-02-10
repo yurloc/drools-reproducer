@@ -47,6 +47,9 @@ public class DroolsReproducerTest {
         kieSession.update(kieSession.getFactHandle(shuttle), shuttle, "destination");
         Assert.assertEquals(0, kieSession.fireAllRules());
         busStop.setBus(null);
+        // LHS is satisfied, rule should fire but it doesn't
+        Assert.assertEquals(busStop, shuttle.getDestination());
+        Assert.assertFalse(busStop.isVisitedByCoach());
         kieSession.update(kieSession.getFactHandle(busStop), busStop, "bus");
         Assert.assertEquals(0, kieSession.fireAllRules());
         kieSession.update(kieSession.getFactHandle(busStop), busStop, "transferShuttleList");
