@@ -3,6 +3,7 @@ package org.optaplanner.testgen;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.drools.core.common.AgendaItem;
 import org.junit.Assert;
 import org.junit.Test;
 import org.kie.api.io.ResourceType;
@@ -11,6 +12,7 @@ import org.kie.api.runtime.rule.Match;
 import org.kie.internal.event.rule.RuleEventListener;
 import org.kie.internal.event.rule.RuleEventManager;
 import org.kie.internal.utils.KieHelper;
+import org.optaplanner.core.api.score.holder.AbstractScoreHolder;
 import org.optaplanner.core.api.score.holder.ScoreHolder;
 import org.optaplanner.core.impl.score.buildin.simplelong.SimpleLongScoreDefinition;
 import org.slf4j.Logger;
@@ -48,19 +50,20 @@ public class DroolsReproducerTest {
 
         final List<String> list = new ArrayList<String>();
 
-        ((RuleEventManager) kieSession).addEventListener(new RuleEventListener() {
-            @Override
-            public void onDeleteMatch(Match match) {
-                list.add("onDeleteMatch: " + match);
-                logger.info("{}", list);
-            }
-
-            @Override
-            public void onUpdateMatch(Match match) {
-                list.add("onUpdateMatch: " + match);
-                logger.info("{}", list);
-            }
-        });
+        ((RuleEventManager) kieSession).addEventListener(new OptaplannerRuleEventListener());
+//        ((RuleEventManager) kieSession).addEventListener(new RuleEventListener() {
+//            @Override
+//            public void onDeleteMatch(Match match) {
+//                list.add("onDeleteMatch: " + match);
+//                logger.info("{}", list);
+//            }
+//
+//            @Override
+//            public void onUpdateMatch(Match match) {
+//                list.add("onUpdateMatch: " + match);
+//                logger.info("{}", list);
+//            }
+//        });
 
         Coach coach = new Coach();
         BusStop busStop1 = new BusStop();
@@ -108,4 +111,27 @@ public class DroolsReproducerTest {
 
     }
 
+
+    private static final class OptaplannerRuleEventListener implements RuleEventListener {
+
+        @Override
+        public void onUpdateMatch(Match match) {
+            undoPreviousMatch((AgendaItem) match);
+        }
+
+        @Override
+        public void onDeleteMatch(Match match) {
+            undoPreviousMatch((AgendaItem) match);
+        }
+
+        public void undoPreviousMatch(AgendaItem agendaItem) {
+            Object callback = agendaItem.getCallback();
+            // Some rules don't have a callback because their RHS doesn't do addConstraintMatch()
+            if (callback instanceof AbstractScoreHolder.ConstraintActivationUnMatchListener) {
+                ((AbstractScoreHolder.ConstraintActivationUnMatchListener) callback).run();
+                agendaItem.setCallback(null);
+            }
+        }
+
+    }
 }
