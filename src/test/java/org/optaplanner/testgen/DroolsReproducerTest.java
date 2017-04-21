@@ -8,9 +8,6 @@ import org.junit.Test;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.utils.KieHelper;
-import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;
-import org.optaplanner.examples.coachshuttlegathering.domain.Coach;
-import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,9 +17,10 @@ public class DroolsReproducerTest {
 
     @Test
     public void test() {
-        String drl = "import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.Coach;\n"
-                + "import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;\n"
+        String drl = "package P;"
+                + "import " + DroolsReproducerTest.BusStop.class.getCanonicalName() + ";\n"
+                + "import " + DroolsReproducerTest.Coach.class.getCanonicalName() + ";\n"
+                + "import " + DroolsReproducerTest.Shuttle.class.getCanonicalName() + ";\n"
                 + "\n"
                 + "global java.util.List result;\n"
                 + "\n"
@@ -99,4 +97,28 @@ public class DroolsReproducerTest {
         Collections.sort(expected);
         Assert.assertEquals(expected, actual);
     }
+
+    public static interface Bus {
+    }
+
+    public static class Coach implements Bus {
+    }
+
+    public static class Shuttle implements Bus {
+    }
+
+    public static class BusStop {
+
+        private Bus bus;
+
+        public Bus getBus() {
+            return bus;
+        }
+
+        public void setBus(Bus bus) {
+            this.bus = bus;
+        }
+
+    }
+
 }
