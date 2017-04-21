@@ -7,11 +7,18 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.Match;
+import org.kie.internal.event.rule.RuleEventListener;
+import org.kie.internal.event.rule.RuleEventManager;
 import org.kie.internal.utils.KieHelper;
 import org.optaplanner.core.api.score.holder.ScoreHolder;
 import org.optaplanner.core.impl.score.buildin.simplelong.SimpleLongScoreDefinition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DroolsReproducerTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(DroolsReproducerTest.class);
 
     @Test
     public void test() {
@@ -38,6 +45,22 @@ public class DroolsReproducerTest {
         List<Long> result = new ArrayList<Long>();
         kieSession.setGlobal("result", result);
         kieSession.setGlobal("scoreHolder", scoreHolder);
+
+        final List<String> list = new ArrayList<String>();
+
+        ((RuleEventManager) kieSession).addEventListener(new RuleEventListener() {
+            @Override
+            public void onDeleteMatch(Match match) {
+                list.add("onDeleteMatch: " + match);
+                logger.info("{}", list);
+            }
+
+            @Override
+            public void onUpdateMatch(Match match) {
+                list.add("onUpdateMatch: " + match);
+                logger.info("{}", list);
+            }
+        });
 
         Coach coach = new Coach();
         BusStop busStop1 = new BusStop();
