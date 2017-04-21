@@ -1,20 +1,16 @@
 package org.optaplanner.testgen;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
-import org.drools.core.common.AgendaItem;
 import org.junit.Assert;
 import org.junit.Test;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.rule.Match;
-import org.kie.internal.event.rule.RuleEventListener;
-import org.kie.internal.event.rule.RuleEventManager;
 import org.kie.internal.utils.KieHelper;
-import org.optaplanner.core.api.score.holder.AbstractScoreHolder;
-import org.optaplanner.core.api.score.holder.ScoreHolder;
-import org.optaplanner.core.impl.score.buildin.simplelong.SimpleLongScoreDefinition;
+import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;
+import org.optaplanner.examples.coachshuttlegathering.domain.Coach;
+import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,114 +20,83 @@ public class DroolsReproducerTest {
 
     @Test
     public void test() {
-        String drl = "import org.optaplanner.core.api.score.buildin.simplelong.SimpleLongScoreHolder;\n"
-                + "import " + DroolsReproducerTest.BusStop.class.getCanonicalName() + ";\n"
-                + "import " + DroolsReproducerTest.Coach.class.getCanonicalName() + ";\n"
-                + "global SimpleLongScoreHolder scoreHolder;\n"
+        String drl = "import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;\n"
+                + "import org.optaplanner.examples.coachshuttlegathering.domain.Coach;\n"
+                + "import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;\n"
+                + "\n"
                 + "global java.util.List result;\n"
-                + "rule coachStopLimit\n"
+                + "\n"
+                + "rule coachCapacity\n"
                 + "    when\n"
-                + "        $coach : Coach($stopLimit : stopLimit)\n"
+                + "        $coach : Coach()\n"
                 + "        accumulate(\n"
-                + "            $stop : BusStop(bus == $coach);\n"
-                + "            $stopTotal : count($stop);\n"
-                + "            $stopTotal > $stopLimit\n"
+                + "            BusStop(bus == $coach);\n"
+                + "            count()\n"
+                + "        )\n"
+                + "\n"
+                + "        $shuttle : Shuttle()\n"
+                + "        accumulate(\n"
+                + "            BusStop(bus == $coach)\n"
+                + "            and BusStop(bus == $shuttle);\n"
+                + "            $result : count()\n"
                 + "        )\n"
                 + "    then\n"
-                + "        scoreHolder.addConstraintMatch(kcontext, $stopTotal);\n"
-                + "        result.add($stopTotal);\n"
+                + "        result.add($result);\n"
                 + "end";
         KieSession kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
 
-        ScoreHolder scoreHolder = new SimpleLongScoreDefinition().buildScoreHolder(true);
-        List<Long> result = new ArrayList<Long>();
+        ArrayList<Integer> result = new ArrayList<Integer>();
         kieSession.setGlobal("result", result);
-        kieSession.setGlobal("scoreHolder", scoreHolder);
 
-        final List<String> list = new ArrayList<String>();
+        Coach coach1 = new Coach();
+        Coach coach2 = new Coach();
+        Shuttle shuttle = new Shuttle();
+        BusStop stop1 = new BusStop();
+        BusStop stop2 = new BusStop();
 
-        ((RuleEventManager) kieSession).addEventListener(new OptaplannerRuleEventListener());
-//        ((RuleEventManager) kieSession).addEventListener(new RuleEventListener() {
-//            @Override
-//            public void onDeleteMatch(Match match) {
-//                list.add("onDeleteMatch: " + match);
-//                logger.info("{}", list);
-//            }
-//
-//            @Override
-//            public void onUpdateMatch(Match match) {
-//                list.add("onUpdateMatch: " + match);
-//                logger.info("{}", list);
-//            }
-//        });
+        stop2.setBus(coach2);
 
-        Coach coach = new Coach();
-        BusStop busStop1 = new BusStop();
-        BusStop busStop2 = new BusStop();
+        kieSession.insert(coach1);
+        kieSession.insert(coach2);
+        kieSession.insert(shuttle);
+        kieSession.insert(stop1);
+        kieSession.insert(stop2);
 
-        busStop1.setBus(coach);
+        Assert.assertEquals(2, kieSession.fireAllRules());
+        logger.info("F1: {}", result);
+        result.clear();
 
-        kieSession.insert(coach);
-        kieSession.insert(busStop1);
-        kieSession.insert(busStop2);
+        kieSession.update(kieSession.getFactHandle(shuttle), shuttle);
+        kieSession.update(kieSession.getFactHandle(stop2), stop2);
+
+        Assert.assertEquals(2, kieSession.fireAllRules());
+        logger.info("F2: {}", result);
+        result.clear();
+
+        kieSession.update(kieSession.getFactHandle(shuttle), shuttle);
+        stop1.setBus(shuttle);
+        kieSession.update(kieSession.getFactHandle(stop1), stop1);
+
+        Assert.assertEquals(2, kieSession.fireAllRules());
+        logger.info("F3: {}", result);
+        ArrayList<Integer> actual = new ArrayList<Integer>(result);
+        Collections.sort(actual);
+        result.clear();
+
+        kieSession = new KieHelper().addContent(drl, ResourceType.DRL).build().newKieSession();
+        kieSession.setGlobal("result", result);
+
+        // Insert everything into a fresh session to see the uncorrupted score
+        kieSession.insert(coach1);
+        kieSession.insert(coach2);
+        kieSession.insert(shuttle);
+        kieSession.insert(stop1);
+        kieSession.insert(stop2);
 
         kieSession.fireAllRules();
-        Assert.assertEquals("1", scoreHolder.extractScore(0).toString());
-        Assert.assertEquals((Long) 1L, result.get(result.size() - 1));
-
-        busStop2.setBus(coach);
-        kieSession.update(kieSession.getFactHandle(busStop2), busStop2, "bus");
-
-        kieSession.fireAllRules();
-        Assert.assertEquals((Long) 2L, result.get(result.size() - 1));
-        // Corrupted score is 3 but should be 2 because there are 2 bus stops with the same coach in total.
-        // Looks like the count() for busStop1 from the previous match becomes duplicated.
-        Assert.assertEquals("2", scoreHolder.extractScore(0).toString());
-    }
-
-    public static class Coach {
-
-        public long getStopLimit() {
-            return 0;
-        }
-
-    }
-
-    public static class BusStop {
-
-        private Coach bus;
-
-        public Coach getBus() {
-            return bus;
-        }
-
-        public void setBus(Coach bus) {
-            this.bus = bus;
-        }
-
-    }
-
-
-    private static final class OptaplannerRuleEventListener implements RuleEventListener {
-
-        @Override
-        public void onUpdateMatch(Match match) {
-            undoPreviousMatch((AgendaItem) match);
-        }
-
-        @Override
-        public void onDeleteMatch(Match match) {
-            undoPreviousMatch((AgendaItem) match);
-        }
-
-        public void undoPreviousMatch(AgendaItem agendaItem) {
-            Object callback = agendaItem.getCallback();
-            // Some rules don't have a callback because their RHS doesn't do addConstraintMatch()
-            if (callback instanceof AbstractScoreHolder.ConstraintActivationUnMatchListener) {
-                ((AbstractScoreHolder.ConstraintActivationUnMatchListener) callback).run();
-                agendaItem.setCallback(null);
-            }
-        }
-
+        logger.info("F1’: {}", result);
+        ArrayList<Integer> expected = new ArrayList<Integer>(result);
+        Collections.sort(expected);
+        Assert.assertEquals(expected, actual);
     }
 }
